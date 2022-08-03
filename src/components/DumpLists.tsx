@@ -12,6 +12,14 @@ const list = [
             {name: "Solution Architext Associate (C02)", lastUpdated:'2022. 07.27', link:'/', img:'https://via.placeholder.com/150'}
 
         ]
+    },
+    {
+        name: 'CISCO',
+        list: [
+            { name: "Solution Architext Associate (C02)", lastUpdated: '2022. 07.27', link: '/', img:'https://via.placeholder.com/150' },
+            {name: "Solution Architext Associate (C02)", lastUpdated:'2022. 07.27', link:'/', img:'https://via.placeholder.com/150'}
+
+        ]
     }
 ]
 
