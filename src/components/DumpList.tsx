@@ -1,27 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import DumpItem from './DumpItem';
 
-const list = [
-
-{
-    name: 'AWS',
-    list: [
-        { name: "Solution Architext Associate (C02)", lastUpdated: '2022. 07.27', link: '/', img:'' },
-        {name: "Solution Architext Associate (C02)", lastUpdated:'2022. 07.27', link:'/', img:''}
-
-    ]
-    }
-]
-
-const DumpList = () => {
+const DumpList = ({ name, list}:any) => {
     return (
         <>
-            <div style={{margin:'1.5rem 0', fontSize:'2rem', fontWeight:'bold'}}>{list[0].name}</div>
+             <div style={{ margin: '1.5rem 0', fontSize: '2rem', fontWeight: 'bold' }}>{name}</div>
             {
-                // list.map((item: any) => {
-                //     return 
-                // });
+                list.map((item: any) => {
+                    return <DumpItem
+                        img={item.img}
+                        name={item.name}
+                        lastUpdated={item.lastUpdated}
+                    />
+                })
             }
         </>
     );
