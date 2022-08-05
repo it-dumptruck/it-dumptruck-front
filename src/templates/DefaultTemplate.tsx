@@ -6,7 +6,7 @@ const DefaultTemplate = ({children}:any) => {
         <>
              <Header />
             <div style={{paddingTop:'60px'}}></div>
-            <div style={{ background: '#F8F8F8', width: '100%', maxWidth: '1024px', margin: '0 auto',minHeight:'calc(100% - 60px)', padding:'20px' }}>
+            <div style={{ background: '#F8F8F8', width: '100%', maxWidth: '1024px', margin: '0 auto',minHeight:'calc(100% - 60px)', padding:'20px',boxSizing:'border-box' }}>
                 {children}
             </div>
         </>
