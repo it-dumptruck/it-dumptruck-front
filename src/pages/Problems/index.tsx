@@ -40,9 +40,10 @@ const problem = {
 
 const Problems = () => {
     const [disabled, setDisabled] = useState<number[]>([]);
-    const onChange =  (e:any) => {
-        setDisabled(prev => {
-            return [...prev, e.target.value]
+    const [prev, setPrev] = useState();
+    const onChange =  (index:any) => {
+        setDisabled((prev:any) => {
+            return [...prev, index]
         });
     }
     return (
@@ -54,12 +55,11 @@ const Problems = () => {
                 { problem.question}
             </div>
             {problem.list.map((item: string, index: number) => {
-              return <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px' }}>
-                  <input type="radio" name="problem" value={index} style={{ marginRight: '10px' }} onChange={onChange} disabled={disabled.includes(index)}  />
+                return <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px' }} key={index}>
+                  <input type="radio" name="problem" value={index} style={{ marginRight: '10px' }} onChange={() => onChange(index)} disabled={disabled.includes(index) ? true : false}  />
                 <div style={{ flex: 1 }}>{item}</div>
             </label>
             })}
-            <button onClick={() => console.log(disabled)}>test</button>
         </DefaultTemplate>
 
     );
