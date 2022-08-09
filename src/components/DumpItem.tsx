@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { IDump, IDumpItem } from '../api/types';
 

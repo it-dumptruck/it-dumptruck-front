@@ -3,13 +3,13 @@ import { FiSearch, FiUser } from 'react-icons/fi';
 
 const Header = () => {
     return (
-        <div style={{ background: '#000', height: '60px', color: 'white', position: 'fixed', width: '100%', fontSize: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div>
+        <div style={{ background: '#000', color: 'white', position: 'fixed', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <h1>
                 IT DUMP Truck
-            </div>
+            </h1>
             <div style={{position:'absolute', right:'20px'}}>
-                <FiSearch style={{marginRight:'15px'}} />
-                <FiUser/>
+                <button style={{ all:'unset', marginRight: '15px', }}><FiSearch style={{ color: '#fff',  fontSize:'1.5rem'}} /></button>
+                <button style={{ all:'unset', }}><FiUser style={{ color: '#fff',  fontSize:'1.5rem'}}/></button>
             </div>
         </div>
     );

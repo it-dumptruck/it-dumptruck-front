@@ -12,7 +12,7 @@ const DumpList: React.FC<DumpListProps> = ({dumps}) => {
             {
                 dumps.map((item: IDump) => {
                     return <>
-                        <div style={{ margin: '1.5rem 0', fontSize: '2rem', fontWeight: 'bold' }}>{item.groupName}</div>
+                        <h3 style={{ margin: '1.5rem 0',  fontWeight: 'bold' }}>{item.groupName}</h3>
                         {
                             item.dumps.map((dump: IDumpItem) => {
                                 return <DumpItem
