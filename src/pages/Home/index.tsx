@@ -16,7 +16,7 @@ const HomePage = () => {
         })();
     }, []);
     // position:absolute; top:-999px; left:-999px
-    if (!dumps) return <div>Loading...</div>;
+    if (!dumps) return <div>test...</div>;
 
     return (
         <DefaultTemplate>
