@@ -11,25 +11,30 @@ const DumpList: React.FC<DumpListProps> = ({ dumps }) => {
         // console.log("test")
     })
     return (
-        <>
+        <div>
             {
                 dumps.map((item: IDump) => {
-                    return <>
-                        <h3 style={{ margin: '1.5rem 0',  fontWeight: 'bold' }}>{item.groupName}</h3>
-                        {
-                            item.dumps.map((dump: IDumpItem) => {
-                                return <DumpItem
-                                    dumpID={ dump.dumpID}
-                                    image={dump.image}
-                                    dumpName={dump.dumpName}
-                                    lastUpdated={dump.lastUpdated}
-                                />
-                            })
-                        }
-                        </>
+                    return (
+                    <div className="mt-10 first:mt-0" aria-labelledby={"dumpgroup-" + item.groupName.toLowerCase()}>
+                        <h3 className="text-2xl font-bold" id={"dumpgroup-" + item.groupName.toLowerCase()}>{item.groupName}</h3>
+                        
+                        <div className="grid grid-cols-1 xl:grid-cols-2 -mx-2">
+                            {
+                                item.dumps.map((dump: IDumpItem) => {
+                                    return <DumpItem
+                                        dumpID={dump.dumpID}
+                                        image={dump.image}
+                                        dumpName={dump.dumpName}
+                                        lastUpdated={dump.lastUpdated}
+                                    />
+                                })
+                            }
+                        </div>
+                    </div>
+                    )
                 })
             }
-        </>
+        </div>
     );
 };
 

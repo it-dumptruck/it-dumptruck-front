@@ -10,7 +10,7 @@ const Header = () => {
                     <a href="/">IT DumpTruck</a>
                 </h1>
                 <div className="basis-1/6 flex justify-end">
-                    <button><VscSaveAll className="text-white text-3xl" /></button>
+                    <button role="button" aria-label="진행상황 저장하기"><VscSaveAll className="text-white text-3xl" aria-hidden /></button>
                 </div>
             </div>
         </header>
