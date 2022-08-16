@@ -2,9 +2,15 @@
 module.exports = {
     content: [
       "./src/**/*.{js,jsx,ts,tsx}",
+      "./public/index.html",
     ],
     theme: {
-      extend: {},
+      extend: {
+        fontFamily: {
+          'cursive': ['Dancing Script'],
+          'body': ['Nanum Gothic']
+        }
+      },
     },
     plugins: [],
   }

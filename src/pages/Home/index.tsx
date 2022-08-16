@@ -7,27 +7,24 @@ import {  IDump } from '../../api/types';
 import DumpList from '../../components/DumpList';
 import DefaultTemplate from '../../templates/DefaultTemplate';
 
-const HomePage = () => {
+const Home = () => {
     const { data: auth, isLoading: authLoading } = useQuery('auth', getAuth);
-    const { data: dumps, isLoading: dumpsLoading, refetch,isSuccess } = useQuery<IDump[]>('dumps',getDumpsLists, {
-        enabled:false
+    const { data: dumps, isLoading: dumpsLoading, refetch, isSuccess } = useQuery<IDump[]>('dumps', getDumpsLists, {
+        enabled: false
     });
 
     useEffect(() => {
         refetch();
     },auth)
-    if(dumpsLoading) return <div>test</div>
 
     return (
         <DefaultTemplate>
             {
-                isSuccess ? <DumpList dumps={dumps} /> : <div>error..</div>
+                dumpsLoading ? '덤프 목록을 불러오고 있습니다.' :
+                isSuccess ? <DumpList dumps={ dumps } /> : '오류발생 삐빅! 삐빅!'
             }
-            <h1 className="text-3xl font-bold underline">
-                Hello world!
-            </h1>
         </DefaultTemplate>
     );
 };
 
-export default HomePage;
+export default Home;

@@ -1,17 +1,19 @@
 import React from 'react';
-import { FiSearch, FiUser } from 'react-icons/fi';
+import { VscSaveAll } from 'react-icons/vsc';
 
 const Header = () => {
     return (
-        <div style={{ background: '#000', color: 'white', position: 'fixed', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <h1>
-                IT DUMP Truck
-            </h1>
-            <div style={{position:'absolute', right:'20px'}}>
-                <button style={{ all:'unset', marginRight: '15px', }}><FiSearch style={{ color: '#fff',  fontSize:'1.5rem'}} /></button>
-                <button style={{ all:'unset', }}><FiUser style={{ color: '#fff',  fontSize:'1.5rem'}}/></button>
+        <header className="bg-zinc-900 fixed w-full py-2 top-0">
+            <div className="flex w-full max-w-screen-xl mx-auto px-2">
+                <div className="basis-1/6"></div>
+                <div className="basis-2/3 text-zinc-50 text-3xl text-center font-cursive cursor-default select-none">
+                    <a href="/">IT DumpTruck</a>
+                </div>
+                <div className="basis-1/6 flex justify-end">
+                    <button><VscSaveAll className="text-white text-3xl" /></button>
+                </div>
             </div>
-        </div>
+        </header>
     );
 };
 
