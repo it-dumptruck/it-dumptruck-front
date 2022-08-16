@@ -1,9 +1,9 @@
 import { IDump, Dumps } from './types.d';
 import axios, { Axios } from "axios";
 
+axios.defaults.withCredentials = true;
 const client = axios.create({
-    // baseURL: "https://f5ih972vs1.execute-api.ap-northeast-2.amazonaws.com",
-
+    baseURL: "https://f5ih972vs1.execute-api.ap-northeast-2.amazonaws.com",
 });
 
 export function setToken(jwt: string) {
