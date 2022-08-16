@@ -20,7 +20,7 @@
     "react-icons": "^4.4.0",
     "react-query": "^3.39.2",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "^2.1.3",
+    "react-scripts": "^5.0.1",
     "typescript": "^4.7.4",
     "web-vitals": "^2.1.4"
   },
@@ -48,5 +48,9 @@
       "last 1 safari version"
     ]
   },
-  "proxy":"https://f5ih972vs1.execute-api.ap-northeast-2.amazonaws.com"
+  "proxy": "https://f5ih972vs1.execute-api.ap-northeast-2.amazonaws.com",
+  "devDependencies": {
+    "postcss": "^8.4.16",
+    "tailwindcss": "^3.1.8"
+  }
 }

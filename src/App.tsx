@@ -25,8 +25,6 @@ const App: React.FC = () => {
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
-    
-    
   );
 };
 
