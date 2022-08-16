@@ -9,29 +9,19 @@ import DefaultTemplate from '../../templates/DefaultTemplate';
 
 const HomePage = () => {
     const { data: auth, isLoading: authLoading } = useQuery('auth', getAuth);
-    const { data: dumps, isLoading: dumpsLoading, refetch } = useQuery<IDump[]>('dumps',getDumpsLists, {
-        enabled: false
+    const { data: dumps, isLoading: dumpsLoading, refetch,isSuccess } = useQuery<IDump[]>('dumps',getDumpsLists, {
+        enabled:false
     });
-    // const { data: dumps, isLoading: dumpsLoading, refetch } = useQuery<IDump[]>('dumps',async () => {
-    //     const { data } = await client.get('/dumps', { headers: { 'token': auth.token } })
-    //     return data
-    // }, {
-    //     enabled: false
-    // });
-    
-    if (!authLoading) { 
-        setToken(auth.token)
-        refetch()
-    }
-    if (dumpsLoading) {
-        return <div>loading...</div>
-    }
 
+    useEffect(() => {
+        refetch();
+    },auth)
+    if(dumpsLoading) return <div>test</div>
 
     return (
         <DefaultTemplate>
             {
-                dumpsLoading ? <DumpList dumps={dumps} /> : <div>error..</div>
+                isSuccess ? <DumpList dumps={dumps} /> : <div>error..</div>
             }
         </DefaultTemplate>
     );

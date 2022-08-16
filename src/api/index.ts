@@ -12,6 +12,7 @@ export function setToken(jwt: string) {
 
 export async function getAuth(){
     const { data } = await client.get('/auth');
+    setToken(data.token)
     return data;
 }
 

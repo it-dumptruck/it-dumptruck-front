@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { IDump, IDumpItem } from '../api/types';
 import DumpItem from './DumpItem';
 
 type DumpListProps = {
-    dumps: IDump[] ;
+    dumps: IDump[];
 }
 
-const DumpList: React.FC<DumpListProps> = ({dumps}) => {
+const DumpList: React.FC<DumpListProps> = ({ dumps }) => {
+    useEffect(() => {
+        console.log("test")
+    })
     return (
         <>
             {
