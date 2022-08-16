@@ -19,6 +19,7 @@ const Home = () => {
 
     return (
         <DefaultTemplate>
+            <h2 className="sr-only">덤프 목록</h2>
             {
                 dumpsLoading ? '덤프 목록을 불러오고 있습니다.' :
                 isSuccess ? <DumpList dumps={ dumps } /> : '오류발생 삐빅! 삐빅!'

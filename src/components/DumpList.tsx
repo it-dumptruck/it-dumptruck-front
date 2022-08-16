@@ -8,7 +8,7 @@ type DumpListProps = {
 
 const DumpList: React.FC<DumpListProps> = ({ dumps }) => {
     useEffect(() => {
-        console.log("test")
+        // console.log("test")
     })
     return (
         <>
