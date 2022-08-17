@@ -5,6 +5,7 @@ import { useMatch, useRoutes } from 'react-router-dom';
 import client, { getAuth, getDumpsLists, setToken } from '../../api';
 import { IDump } from '../../api/types';
 import DumpList from '../../components/DumpList';
+import Loading from '../../components/Loading';
 import DefaultTemplate from '../../templates/DefaultTemplate';
 
 const HomePage = () => {
@@ -21,7 +22,7 @@ const HomePage = () => {
         <DefaultTemplate>
             <h2 className="sr-only">덤프 목록</h2>
             {
-                dumpsLoading ? '덤프 목록을 불러오고 있습니다.' :
+                dumpsLoading ? <Loading title="덤프 목록을 불러오는 중.." /> :
                 isSuccess ? <DumpList dumps={ dumps } /> : '오류발생 삐빅! 삐빅!'
             }
         </DefaultTemplate>
