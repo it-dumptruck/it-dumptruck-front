@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useMatch, useRoutes } from 'react-router-dom';
 import client, { getAuth, getDumpsLists, setToken } from '../../api';
-import {  IDump } from '../../api/types';
+import { IDump } from '../../api/types';
 import DumpList from '../../components/DumpList';
 import DefaultTemplate from '../../templates/DefaultTemplate';
 

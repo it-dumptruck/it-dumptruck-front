@@ -5,7 +5,7 @@ import { IDump, IDumpItem } from '../api/types';
 import Button from './Button';
 
 const DumpItem = ({ image, dumpName, lastUpdated, dumpID }: IDumpItem) => {
-    const timestamp = new Date(lastUpdated);
+    const timestamp = new Date(lastUpdated * 1000);
     const dateToString = moment(timestamp).fromNow();
     return (
         <div className="xl:basis-1/2 shrink-0 shadow-sm hover:shadow-md transition-shadow border border-zinc-200 rounded m-2 py-2 px-4 sm:flex sm:justify-between">
