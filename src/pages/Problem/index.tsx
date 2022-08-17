@@ -59,7 +59,7 @@ const ProblemPage= () => {
                 <select className="border rounded px-2">
                     <option value="">차례로 풀기</option>
                     <option value="">무작위로 풀기</option>
-                    <option value="">마킹문제 풀기</option>
+                    <option value="">마킹문제 풀기(해당 문제에 별표쳐있을때만 이 항목이 나옴)</option>
                 </select>
             </div>
             
