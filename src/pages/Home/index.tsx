@@ -7,7 +7,7 @@ import {  IDump } from '../../api/types';
 import DumpList from '../../components/DumpList';
 import DefaultTemplate from '../../templates/DefaultTemplate';
 
-const Home = () => {
+const HomePage = () => {
     const { data: auth, isLoading: authLoading } = useQuery('auth', getAuth);
     const { data: dumps, isLoading: dumpsLoading, refetch, isSuccess } = useQuery<IDump[]>('dumps', getDumpsLists, {
         enabled: false
@@ -28,4 +28,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default HomePage;

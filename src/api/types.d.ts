@@ -14,3 +14,17 @@ export type IDump = {
 export type Dumps = {
     dumps: IDump[];
 }
+
+export type Problem = {
+    id: number;
+    question: string;
+    question_en: string;
+    answer: string[];
+    list: string[];
+    list_en: string[];
+    prev_id: string;
+    next_id: string;
+    description: string;
+    marked: boolean;
+    user_answer?: string[];
+}
