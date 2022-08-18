@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
 export const useAuthState = () => {
     const auth = useContext(AuthContext);
-    console.log(auth)
     if (!auth) throw new Error("not exist Auth Context");
     return auth;
 }

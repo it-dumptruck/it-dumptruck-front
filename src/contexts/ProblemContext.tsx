@@ -14,12 +14,3 @@ export function useProblemState() {
     if(!problemState) throw new Error('error')
     return problemState;
 }
-
-/*
-/dumps/{dump-id}/{problem-id}
-문제페이지
-
-
-/dumps/{dump-id/marked
-마킹된 문제 리스트sdf
-*/

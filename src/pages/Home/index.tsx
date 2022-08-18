@@ -14,10 +14,10 @@ import DefaultTemplate from '../../templates/DefaultTemplate';
 const HomePage = () => {
     const [auth, ] = useAuthState();
     const { mutate: authMutate, isLoading: isAuthLoading } = useAuth();
-    const { data: dumps, isLoading: dumpsLoading, refetch, isSuccess } = useQuery<IDump[]>('dumps', getDumpsLists, {
+    const { data: dumps, isLoading: dumpsLoading, refetch, isSuccess,isFetching,isError,isIdle } = useQuery<IDump[]>('dumps', getDumpsLists, {
         enabled:false
     });
-        
+    
     useEffect(() => {
         if (!auth) {
             authMutate();
@@ -25,7 +25,12 @@ const HomePage = () => {
         }
     },[auth]);
 
-
+    useEffect(() => {
+        console.log("ss",isSuccess);
+        console.log("fet", isFetching)
+        console.log("data", dumps)
+        console.log(isIdle)
+    }, [isSuccess])
     return (
         <DefaultTemplate>
             <h2 className="sr-only">덤프 목록</h2>
