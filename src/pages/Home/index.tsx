@@ -6,17 +6,25 @@ import client, { getAuth, getDumpsLists, setToken } from '../../api';
 import { IDump } from '../../api/types';
 import DumpList from '../../components/DumpList';
 import Loading from '../../components/Loading';
+import { useAuthState } from '../../contexts/AuthContext';
+import { ProblemContextState, useProblemState } from '../../contexts/ProblemContext';
+import { useAuth } from '../../hooks/useAuth';
 import DefaultTemplate from '../../templates/DefaultTemplate';
 
 const HomePage = () => {
-    const { data: auth, isLoading: authLoading } = useQuery('auth', getAuth);
+    const [auth, ] = useAuthState();
+    const { mutate: authMutate, isLoading: isAuthLoading } = useAuth();
     const { data: dumps, isLoading: dumpsLoading, refetch, isSuccess } = useQuery<IDump[]>('dumps', getDumpsLists, {
-        enabled: false
+        enabled:false
     });
-
+        
     useEffect(() => {
-        refetch();
-    },auth)
+        if (!auth) {
+            authMutate();
+            refetch();
+        }
+    },[auth]);
+
 
     return (
         <DefaultTemplate>

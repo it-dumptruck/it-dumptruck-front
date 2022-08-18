@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 
-import { getProblem, getProblems } from '../../api';
+import { getAuth, getProblem, getProblems } from '../../api';
 import { Problem } from '../../api/types';
 import { useProblemState } from '../../contexts/ProblemContext';
-import useProblem from '../../hooks/useProblem';
 
 import DefaultTemplate from '../../templates/DefaultTemplate';
 import Button from '../../components/Button';
 import AnswerButton from '../../components/AnswerButton';
+import { useAuth } from '../../hooks/useAuth';
+import { useAuthState } from '../../contexts/AuthContext';
 
 // const problem = {
 //     id: 1,
@@ -26,21 +27,20 @@ import AnswerButton from '../../components/AnswerButton';
 //     prev_id: "eaca2046207dc8f58b4941552d0932b86ff03d5e",
 //     description: "해설(없을수도있음 없으면 null)",
 // }
-const ProblemPage= () => {
-    const { dumpId, questionToken } = useParams() as any;
-    //  const { data, isLoading } = useQuery(`${dumpId}`, () => {
-    //      const [hasProblem, setHasProblem] = useProblemState();
-    //     if (!hasProblem)
-    //         return getProblem(dumpId, questionToken);
-    //     const isProblem = hasProblem.filter((item):Problem => item.id === questionToken);
-    // });
-    // const [disabled, setDisabled] = useState<number[]>([]);
-    // const [prev, setPrev] = useState();
-    // const onChange =  (index:any) => {
-    //     setDisabled((prev:any) => {
-    //         return [...prev, index]
-    //     });
-    // }
+const ProblemPage = () => {
+    const [auth,] = useAuthState();
+    const { mutate: authMutate, isLoading: isAuthLoading } = useAuth();
+    const { dumpId, questionId }: {dumpId: string, questionId: string} = useParams() as any;
+    const { data, isLoading, refetch, isError} = useQuery<Problem>(['dumps', dumpId, questionId], () => getProblem(dumpId, questionId), {enabled: !!auth});
+    useEffect(() => {
+        if (!auth) {
+            authMutate();
+            refetch();
+        }
+    }, [auth]);
+    if (isError) {
+        
+    }
     return (
         <DefaultTemplate>
             <h2 className="sr-only">문제 풀이 페이지</h2>
@@ -52,7 +52,7 @@ const ProblemPage= () => {
                         <FaRegStar className="text-2xl mr-2 text-zinc-300 hover:animate-bounce" />
                     </button>
 
-                    <h3 className="text-3xl font-extrabold mr-4">Q3</h3>
+                    <h3 className="text-3xl font-extrabold mr-4"></h3>
                     <Button className="py-2">원문보기</Button>
                 </div>
 

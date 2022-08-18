@@ -1,6 +1,6 @@
 import React, { createContext,useContext,useState } from 'react';
 import { Problem } from '../api/types';
-type ProblemContextState = [Problem[] | null, (prolem: any) => void];
+export type ProblemContextState = [Problem[] | null, (prolem: any) => void];
 
 const ProblemContext = createContext<ProblemContextState | null>(null);
 
@@ -11,7 +11,7 @@ export function ProblemContextProvider({ children }: {children:React.ReactNode})
 
 export function useProblemState() {
     const problemState = useContext(ProblemContext);
-    if (!problemState) return null;
+    if(!problemState) throw new Error('error')
     return problemState;
 }
 

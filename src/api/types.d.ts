@@ -22,9 +22,13 @@ export type Problem = {
     answer: string[];
     list: string[];
     list_en: string[];
-    prev_id: string;
-    next_id: string;
+    prev_id?: string;
+    next_id?: string;
     description: string;
     marked: boolean;
     user_answer?: string[];
+}
+export type Auth = {
+    token: string | null;
+    uid: string | null;
 }
