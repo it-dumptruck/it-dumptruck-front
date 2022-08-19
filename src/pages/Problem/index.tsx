@@ -65,8 +65,7 @@ const ProblemPage = () => {
     const [pressed, setPressed] = useState<string[] | null>(null);
     const [mark, setMark] = useState<boolean>(false);
     const navigate = useNavigate();
-    const answerButtonRef = useRef();
-    const keyboardControllerRef = useRef();
+    const keyboardControllerRef = useRef<HTMLInputElement>(null);
     
     useEffect(() => {
         setKorean(true);
@@ -116,7 +115,7 @@ const ProblemPage = () => {
         else return;
         
         onPressList(String.fromCharCode(char))
-    }, [data, showAnswer, answerButtonRef, pressed]);
+    }, [data, showAnswer, pressed]);
 
     const movePrev = useCallback(() => {
         if (!data?.prev_id) return;
@@ -133,7 +132,7 @@ const ProblemPage = () => {
     return (
         <DefaultTemplate>
             <label className="sr-only" htmlFor="keyboardControlDescription">방향키를 이용해 문제간 이동이 가능합니다. 위쪽 방향키를 눌러 정답 확인이 가능합니다.</label>
-            <input id="keyboardControlDescription" type="text" className="bg-slate-200 absolute top-[-999px] left-[-999px]" onKeyDown={ onKeyDown } ref="keyboardControllerRef" autoFocus readOnly />
+            <input id="keyboardControlDescription" type="text" className="bg-slate-200 absolute top-[-999px] left-[-999px]" onKeyDown={ onKeyDown } ref={ keyboardControllerRef } autoFocus readOnly />
             <h2 className="sr-only">문제 풀이 페이지</h2>
             <div className="flex justify-between">
                 <div className="flex items-center">
@@ -166,10 +165,11 @@ const ProblemPage = () => {
             </article>
             <div>
                 {
-                    korean ? data?.list.map((item, index) => {
-                        return <AnswerButton key={index} label={String.fromCharCode(index + 65)} text={item} answer={showAnswer && (data?.answer.filter(i => i === String.fromCharCode(index + 65)).length > 0)} pressed={pressed ? pressed.indexOf(String.fromCharCode(index + 65)) >=0 : false} onPress={onPressList} onKeyDown={ onKeyDown } />
-                    }) : data?.list_en.map((item, index) => {
-                        return <AnswerButton key={index} label={String.fromCharCode(index + 65)} text={item} answer={showAnswer && (data?.answer.filter(i => i === String.fromCharCode(index + 65)).length > 0)} pressed={pressed ? pressed.indexOf(String.fromCharCode(index + 65)) >=0 : false} onPress={onPressList} onKeyDown={ onKeyDown } />
+                    (korean ? data?.list : data?.list_en)?.map((item, index) => {
+                        let isAnswer = data?.answer.filter(i => i === String.fromCharCode(index + 65)).length ?? 0;
+                        let char = String.fromCharCode(index + 65);
+                        
+                        return <AnswerButton key={ index } label={ char } text={ item } answer={ showAnswer && isAnswer > 0 } pressed={ pressed ? pressed.indexOf(char) >= 0 : false } onPress={ onPressList } onKeyDown={ onKeyDown } />
                     })
                 }
             </div>
