@@ -25,12 +25,48 @@ const ProblemPage = () => {
     const { mutate: authMutate, isLoading: isAuthLoading } = useAuth();
     const { dumpId, questionId }: { dumpId: string, questionId: string } = useParams() as any;
     const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problem>(['dumps', dumpId, questionId], () => getProblem(dumpId, questionId), { enabled: !!auth });
+    // 문제 로딩 되었을 경우 keyboardControllerRef?.current.focus() 코드 실행해야함
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
+    // 어캐하는지 모름
     const [korean, setKorean] = useState<boolean>(true);
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
     const [pressed, setPressed] = useState<string[] | null>(null);
     const [mark, setMark] = useState<boolean>(false);
     const navigate = useNavigate();
     const answerButtonRef = useRef();
+    const keyboardControllerRef = useRef();
     
     useEffect(() => {
         setKorean(true);
@@ -83,17 +119,21 @@ const ProblemPage = () => {
     }, [data, showAnswer, answerButtonRef, pressed]);
 
     const movePrev = useCallback(() => {
+        if (!data?.prev_id) return;
+
         navigate(`/dumps/${dumpId}/${data?.prev_id}`)
     }, [data]);
 
     const moveNext = useCallback(() => {
+        if (!data?.next_id) return;
+
         navigate(`/dumps/${dumpId}/${data?.next_id}`)
     }, [data]);
 
     return (
         <DefaultTemplate>
             <label className="sr-only" htmlFor="keyboardControlDescription">방향키를 이용해 문제간 이동이 가능합니다. 위쪽 방향키를 눌러 정답 확인이 가능합니다.</label>
-            <input id="keyboardControlDescription" type="text" className="bg-slate-200 absolute top-[-999px] left-[-999px]" onKeyDown={ onKeyDown } autoFocus readOnly />
+            <input id="keyboardControlDescription" type="text" className="bg-slate-200 absolute top-[-999px] left-[-999px]" onKeyDown={ onKeyDown } ref="keyboardControllerRef" autoFocus readOnly />
             <h2 className="sr-only">문제 풀이 페이지</h2>
             <div className="flex justify-between">
                 <div className="flex items-center">
@@ -139,9 +179,9 @@ const ProblemPage = () => {
             </div>
 
             <div className="flex mt-16 justify-between">
-                <Button className="px-16 py-4" onClick={ movePrev } onKeyDown={ onKeyDown }>이전</Button>
+                <Button className="px-16 py-4" onClick={ movePrev } onKeyDown={ onKeyDown } disabled={ data?.prev_id == null }>이전</Button>
                 <Button className="px-16 py-4" onClick={toggleAnswer} onKeyDown={ onKeyDown }>정답보기</Button>
-                <Button className="px-16 py-4" onClick={ moveNext } onKeyDown={ onKeyDown }>다음</Button>
+                <Button className="px-16 py-4" onClick={ moveNext } onKeyDown={ onKeyDown } disabled={ data?.next_id == null }>다음</Button>
             </div>
         </DefaultTemplate>
     )
