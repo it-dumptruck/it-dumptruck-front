@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { FaStar, FaRegStar } from 'react-icons/fa';
@@ -26,48 +26,17 @@ const ProblemPage = () => {
     const { dumpId, questionId }: { dumpId: string, questionId: string } = useParams() as any;
     const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problem>(['dumps', dumpId, questionId], () => getProblem(dumpId, questionId), { enabled: !!auth });
     // 문제 로딩 되었을 경우 keyboardControllerRef?.current.focus() 코드 실행해야함
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
-    // 어캐하는지 모름
     const [korean, setKorean] = useState<boolean>(true);
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
     const [pressed, setPressed] = useState<string[] | null>(null);
     const [mark, setMark] = useState<boolean>(false);
     const navigate = useNavigate();
-    const keyboardControllerRef = useRef<HTMLInputElement>(null);
+    const keyboardControllerRef = useRef<HTMLInputElement>(null) as any;
     
+    
+
     useEffect(() => {
+        keyboardControllerRef.current.focus();
         setKorean(true);
         setShowAnswer(false);
         setPressed(null);
