@@ -1,14 +1,23 @@
-import { IDump, Dumps } from './types.d';
-import axios, { Axios } from "axios";
+import { IDump, Dumps, Problem, Auth } from './types.d';
+import axios, { Axios, HeadersDefaults } from "axios";
 
 axios.defaults.withCredentials = true;
 const client = axios.create({
     baseURL: "https://f5ih972vs1.execute-api.ap-northeast-2.amazonaws.com",
 });
 
-export function setToken(jwt: string) {
-    client.defaults.headers.common['token']= jwt;
+
+export function setToken({ token, uid }: Auth) {
+    if (!token || !uid) return;
+    client.defaults.headers.common['token'] = token;
+    client.defaults.headers.common['uid'] = uid;
 }
+
+export function clearToken() {
+    client.defaults.headers.common['token'] = '';
+    client.defaults.headers.common['uid'] = '';
+}
+
 
 export function setType(type:string = "sequence") { 
     client.defaults.headers.common['type'] = type;
@@ -21,8 +30,8 @@ export async function getAuth(){
 }
 
 
-export async function getProblem(dumpId:string,questionToken:string ) {
-    const { data } = await client.get(`/dump/${dumpId}/${questionToken}`);
+export async function getProblem(dumpId:string,questionToken:string ):Promise<Problem> {
+    const { data } = await client.get(`/dumps/${dumpId}/${questionToken}`);
     return data;
 }
 
@@ -33,10 +42,8 @@ export async function getDumpsLists():Promise<IDump[]> {
 
 
 export async function getProblems(dumpId:string,questionToken:string ) {
-    const { data } = await client.get("/dump");
+    const { data } = await client.get("/dumps");
     return data;
 }
-
-
 
 export default client;
