@@ -25,9 +25,12 @@ import DefaultTemplate from '../../templates/DefaultTemplate';
 // }
 
 const ProblemsPage = () => {
-    return (<div>
-        problem list...
-    </div>)
+    return (
+        <DefaultTemplate>
+            <h2 className="sr-only">문제 리스트 페이지</h2>
+            sdf
+        </DefaultTemplate>
+    )
 };
 
 export default ProblemsPage;
