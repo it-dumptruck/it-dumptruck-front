@@ -8,7 +8,7 @@ const AnswerButton = ({ label, text, pressed, answer, onPress,key }: any) => {
                 { label }
             </div>
 
-            <div className="whitespace-pre-line tracking-tight leading-6 border-l pl-3">
+            <div className="whitespace-pre-line tracking-tight leading-6 border-l pl-3 text-left">
                 { text }
             </div>
         </button>

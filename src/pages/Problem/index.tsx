@@ -12,6 +12,7 @@ import Button from '../../components/Button';
 import AnswerButton from '../../components/AnswerButton';
 import { useAuth } from '../../hooks/useAuth';
 import { useAuthState } from '../../contexts/AuthContext';
+import Loading from '../../components/Loading';
 
 enum TYPE { 
     SEQUENCE = 'sequence',
@@ -62,8 +63,6 @@ const ProblemPage = () => {
         if (!isPress || !pressed) setPressed([key]);
         else if (isPress.length === 0) setPressed([...pressed, key])
         else setPressed(pressed.filter(i => i !== key));
-        console.log(pressed);
-       
     }, [pressed])
 
     return (
@@ -76,19 +75,27 @@ const ProblemPage = () => {
                             <FaRegStar className="text-2xl mr-2 text-zinc-300" />
                         }
                     </button>
-                    <h3 className="text-3xl font-extrabold mr-4">Q1</h3>
+                    <h3 className="text-3xl font-extrabold mr-4">Q{ questionId }</h3>
                     <Button className="py-2" onClick={changeLanguage}>{korean ? '원문보기' : '한글보기'}</Button>
                 </div>
-                <select className="border rounded px-2" onChange={changeType}>
-                    <option value={`${TYPE.SEQUENCE}`}>차례로 풀기</option>
-                    <option value={`${TYPE.RANDOM}`}>무작위로 풀기</option>
-                    {
-                        mark ? <option value={`${TYPE.MARKED}`}>마킹된 문제 풀기</option> : ''
-                    }
-                </select>
+
+                <div className="flex">
+                    <select className="border rounded px-2" onChange={changeType}>
+                        <option value={`${TYPE.SEQUENCE}`}>차례로 풀기</option>
+                        <option value={`${TYPE.RANDOM}`}>무작위로 풀기</option>
+                        {
+                            mark ? <option value={`${TYPE.MARKED}`}>마킹된 문제 풀기</option> : ''
+                        }
+                    </select>
+
+                    <Button className="py-2 ml-2">목록 보기</Button>
+                </div>
             </div>
             <article className="whitespace-pre-line tracking-tight leading-6 mt-4 mb-8" style={{ wordSpacing: '2px' }}>
-                {korean && data ? data.question : data?.question_en}        
+                {
+                    data ? (korean ? data.question : data?.question_en)
+                    : <Loading title="문제를 가져오는 중.." />
+                }        
             </article>
             <div>
                 {
@@ -100,7 +107,7 @@ const ProblemPage = () => {
                 }
             </div>
 
-            <div className="sr-only" role="status" aria-label="정답">
+            <div className="mt-8" role="status" aria-label="정답 및 해설">
                 {showAnswer ? data?.answer : ''}
             </div>
 
