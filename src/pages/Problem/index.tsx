@@ -73,10 +73,10 @@ const ProblemPage = () => {
                 <div className="flex items-center">
                     <button role="button" aria-label="마킹하기/마킹해제" onClick={toggleMark}>
                         {mark ? <FaStar className="text-2xl mr-2 text-yellow-400" />:
-                            <FaRegStar className="text-2xl mr-2 text-zinc-300 hover:animate-bounce" />
+                            <FaRegStar className="text-2xl mr-2 text-zinc-300" />
                         }
                     </button>
-                    <h3 className="text-3xl font-extrabold mr-4"></h3>
+                    <h3 className="text-3xl font-extrabold mr-4">Q1</h3>
                     <Button className="py-2" onClick={changeLanguage}>{korean ? '원문보기' : '한글보기'}</Button>
                 </div>
                 <select className="border rounded px-2" onChange={changeType}>
