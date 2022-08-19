@@ -82,7 +82,9 @@ const ProblemPage = () => {
                 <select className="border rounded px-2" onChange={changeType}>
                     <option value={`${TYPE.SEQUENCE}`}>차례로 풀기</option>
                     <option value={`${TYPE.RANDOM}`}>무작위로 풀기</option>
-                    <option value={`${TYPE.MARKED}`}>마킹문제 풀기(해당 문제에 별표쳐있을때만 이 항목이 나옴)</option>
+                    {
+                        mark ? <option value={`${TYPE.MARKED}`}>마킹된 문제 풀기</option> : ''
+                    }
                 </select>
             </div>
             <article className="whitespace-pre-line tracking-tight leading-6 mt-4 mb-8" style={{ wordSpacing: '2px' }}>
