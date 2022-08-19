@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 
 import { getAuth, getProblem, getProblems, setType } from '../../api';
@@ -29,7 +29,9 @@ const ProblemPage = () => {
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
     const [pressed, setPressed] = useState<string[] | null>(null);
     const [mark, setMark] = useState<boolean>(false);
-
+    const navigate = useNavigate();
+    const answerButtonRef = useRef();
+    
     useEffect(() => {
         setKorean(true);
         setShowAnswer(false);
@@ -65,8 +67,33 @@ const ProblemPage = () => {
         else setPressed(pressed.filter(i => i !== key));
     }, [pressed])
 
+    const onKeyDown = useCallback((e: React.KeyboardEvent) => {
+        if (!data) return;
+
+        if (e.keyCode == 37) movePrev();
+        else if (e.keyCode == 39) moveNext();
+        else if (e.keyCode == 38) setShowAnswer(!showAnswer);
+
+        let char;
+        if (e.keyCode >= 49 && e.keyCode <= 57) char = e.keyCode + 16;
+        else if (e.keyCode >= 65 && e.keyCode <= 90) char = e.keyCode
+        else return;
+        
+        onPressList(String.fromCharCode(char))
+    }, [data, showAnswer, answerButtonRef, pressed]);
+
+    const movePrev = useCallback(() => {
+        navigate(`/dumps/${dumpId}/${data?.prev_id}`)
+    }, [data]);
+
+    const moveNext = useCallback(() => {
+        navigate(`/dumps/${dumpId}/${data?.next_id}`)
+    }, [data]);
+
     return (
         <DefaultTemplate>
+            <label className="sr-only" htmlFor="keyboardControlDescription">방향키를 이용해 문제간 이동이 가능합니다. 위쪽 방향키를 눌러 정답 확인이 가능합니다.</label>
+            <input id="keyboardControlDescription" type="text" className="bg-slate-200 absolute top-[-999px] left-[-999px]" onKeyDown={ onKeyDown } autoFocus readOnly />
             <h2 className="sr-only">문제 풀이 페이지</h2>
             <div className="flex justify-between">
                 <div className="flex items-center">
@@ -76,11 +103,11 @@ const ProblemPage = () => {
                         }
                     </button>
                     <h3 className="text-3xl font-extrabold mr-4">Q{ questionId }</h3>
-                    <Button className="py-2" onClick={changeLanguage}>{korean ? '원문보기' : '한글보기'}</Button>
+                    <Button className="py-2" onClick={changeLanguage} onKeyDown={ onKeyDown }>{korean ? '원문보기' : '한글보기'}</Button>
                 </div>
 
                 <div className="flex">
-                    <select className="border rounded px-2" onChange={changeType}>
+                    <select className="border rounded px-2" onChange={changeType} onKeyDown={ onKeyDown }>
                         <option value={`${TYPE.SEQUENCE}`}>차례로 풀기</option>
                         <option value={`${TYPE.RANDOM}`}>무작위로 풀기</option>
                         {
@@ -100,9 +127,9 @@ const ProblemPage = () => {
             <div>
                 {
                     korean ? data?.list.map((item, index) => {
-                        return <AnswerButton key={index} label={String.fromCharCode(index + 65)} text={item} answer={showAnswer && (data?.answer.filter(i => i === String.fromCharCode(index + 65)).length > 0)} pressed={pressed ? pressed.indexOf(String.fromCharCode(index + 65)) >=0 : false} onPress={onPressList} />
+                        return <AnswerButton key={index} label={String.fromCharCode(index + 65)} text={item} answer={showAnswer && (data?.answer.filter(i => i === String.fromCharCode(index + 65)).length > 0)} pressed={pressed ? pressed.indexOf(String.fromCharCode(index + 65)) >=0 : false} onPress={onPressList} onKeyDown={ onKeyDown } />
                     }) : data?.list_en.map((item, index) => {
-                        return <AnswerButton key={index} label={String.fromCharCode(index + 65)} text={item} answer={showAnswer && (data?.answer.filter(i => i === String.fromCharCode(index + 65)).length > 0)}pressed={pressed ? pressed.indexOf(String.fromCharCode(index + 65)) >=0 : false} onPress={onPressList} />
+                        return <AnswerButton key={index} label={String.fromCharCode(index + 65)} text={item} answer={showAnswer && (data?.answer.filter(i => i === String.fromCharCode(index + 65)).length > 0)} pressed={pressed ? pressed.indexOf(String.fromCharCode(index + 65)) >=0 : false} onPress={onPressList} onKeyDown={ onKeyDown } />
                     })
                 }
             </div>
@@ -112,9 +139,9 @@ const ProblemPage = () => {
             </div>
 
             <div className="flex mt-16 justify-between">
-                <Link to={`/dumps/${dumpId}/${+questionId-1}`}><Button className="px-16 py-4">이전</Button></Link> 
-                <Button className="px-16 py-4" onClick={toggleAnswer}>정답보기</Button>
-                <Link to={`/dumps/${dumpId}/${+questionId+1}`}><Button className="px-16 py-4">다음</Button></Link> 
+                <Button className="px-16 py-4" onClick={ movePrev } onKeyDown={ onKeyDown }>이전</Button>
+                <Button className="px-16 py-4" onClick={toggleAnswer} onKeyDown={ onKeyDown }>정답보기</Button>
+                <Button className="px-16 py-4" onClick={ moveNext } onKeyDown={ onKeyDown }>다음</Button>
             </div>
         </DefaultTemplate>
     )
