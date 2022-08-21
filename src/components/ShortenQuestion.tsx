@@ -11,7 +11,7 @@ export default () => {
                     Q1
                 </h4>
             </div>
-            <div className="mt-2">
+            <div className="mt-2 text-sm sm:text-base">
                 회사에서 새로운 서버리스 워크로드를 배포할 준비를 하고 있습니다. 솔루션 설계자는 AWS Lambda 함수를 호출하기 위한 권한을 구성해야 합니다. 이 함수는 Amazon ...
             </div>
         </div>

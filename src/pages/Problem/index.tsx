@@ -25,7 +25,6 @@ const ProblemPage = () => {
     const { mutate: authMutate, isLoading: isAuthLoading } = useAuth();
     const { dumpId, questionId }: { dumpId: string, questionId: string } = useParams() as any;
     const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problem>(['dumps', dumpId, questionId], () => getProblem(dumpId, questionId), { enabled: !!auth });
-    // 문제 로딩 되었을 경우 keyboardControllerRef?.current.focus() 코드 실행해야함
     const [korean, setKorean] = useState<boolean>(true);
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
     const [pressed, setPressed] = useState<string[] | null>(null);
@@ -103,17 +102,8 @@ const ProblemPage = () => {
             <label className="sr-only" htmlFor="keyboardControlDescription">방향키를 이용해 문제간 이동이 가능합니다. 위쪽 방향키를 눌러 정답 확인이 가능합니다.</label>
             <input id="keyboardControlDescription" type="text" className="bg-slate-200 absolute top-[-999px] left-[-999px]" onKeyDown={ onKeyDown } ref={ keyboardControllerRef } autoFocus readOnly />
             <h2 className="sr-only">문제 풀이 페이지</h2>
-            <div className="flex justify-between">
-                <div className="flex items-center">
-                    <button role="button" aria-label="마킹하기/마킹해제" onClick={toggleMark}>
-                        {mark ? <FaStar className="text-2xl mr-2 text-yellow-400" />:
-                            <FaRegStar className="text-2xl mr-2 text-zinc-300" />
-                        }
-                    </button>
-                    <h3 className="text-3xl font-extrabold mr-4">Q{ questionId }</h3>
-                    <Button className="py-2" onClick={changeLanguage} onKeyDown={ onKeyDown }>{korean ? '원문보기' : '한글보기'}</Button>
-                </div>
 
+            <div className="sm:flex sm:flex-row-reverse justify-between">
                 <div className="flex">
                     <select className="border rounded px-2" onChange={changeType} onKeyDown={ onKeyDown }>
                         <option value={`${TYPE.SEQUENCE}`}>차례로 풀기</option>
@@ -124,6 +114,16 @@ const ProblemPage = () => {
                     </select>
 
                     <Button className="py-2 ml-2">목록 보기</Button>
+                </div>
+
+                <div className="flex items-center mt-4 sm:mt-0">
+                    <button role="button" aria-label="마킹하기/마킹해제" onClick={toggleMark}>
+                        {mark ? <FaStar className="text-2xl mr-2 text-yellow-400" />:
+                            <FaRegStar className="text-2xl mr-2 text-zinc-300" />
+                        }
+                    </button>
+                    <h3 className="text-3xl font-extrabold mr-4">Q{ questionId }</h3>
+                    <Button className="py-2" onClick={changeLanguage} onKeyDown={ onKeyDown }>{korean ? '원문보기' : '한글보기'}</Button>
                 </div>
             </div>
             <article className="whitespace-pre-line tracking-tight leading-6 mt-4 mb-8" style={{ wordSpacing: '2px' }}>
@@ -148,9 +148,9 @@ const ProblemPage = () => {
             </div>
 
             <div className="flex mt-16 justify-between">
-                <Button className="px-16 py-4" onClick={ movePrev } onKeyDown={ onKeyDown } disabled={ data?.prev_id == null }>이전</Button>
-                <Button className="px-16 py-4" onClick={toggleAnswer} onKeyDown={ onKeyDown }>정답보기</Button>
-                <Button className="px-16 py-4" onClick={ moveNext } onKeyDown={ onKeyDown } disabled={ data?.next_id == null }>다음</Button>
+                <Button className="px-8 sm:px-16 py-4" onClick={ movePrev } onKeyDown={ onKeyDown } disabled={ data?.prev_id == null }>이전</Button>
+                <Button className="px-8 sm:px-16 py-4" onClick={toggleAnswer} onKeyDown={ onKeyDown }>정답보기</Button>
+                <Button className="px-8 sm:px-16 py-4" onClick={ moveNext } onKeyDown={ onKeyDown } disabled={ data?.next_id == null }>다음</Button>
             </div>
         </DefaultTemplate>
     )
