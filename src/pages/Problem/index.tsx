@@ -31,8 +31,6 @@ const ProblemPage = () => {
     const [mark, setMark] = useState<boolean>(false);
     const navigate = useNavigate();
     const keyboardControllerRef = useRef<HTMLInputElement>(null) as any;
-    
-    
 
     useEffect(() => {
         keyboardControllerRef.current.focus();
