@@ -40,7 +40,7 @@ const Header = ({ uid }: any) => {
                     </div>
                 </div>
 
-                <div className={`absolute z-40 top-9 right-2 w-full opacity-90 ${ showSaved ? '' : 'hidden' }`}>
+                <div className={`absolute z-40 top-9 right-2 w-full opacity-95 ${ showSaved ? '' : 'hidden' }`}>
                     <div className="inline-block border-b-zinc-900 border-8 border-transparent absolute right-2" aria-hidden></div>
                     <div className="bg-zinc-900 text-zinc-50 p-6 absolute top-4 right-0 shadow-lg text-center rounded">
                         다른 기기에서 학습을 이어 하시려면<br />
