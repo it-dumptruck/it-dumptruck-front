@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { useQuery } from 'react-query';
+import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
 import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 
-import { getAuth, getProblem, getProblems, setType } from '../../api';
+import { getAuth, getProblem, getProblems, setMarkProblem, setType } from '../../api';
 import { Problem } from '../../api/types';
 import { useProblemState } from '../../contexts/ProblemContext';
 
@@ -22,22 +22,27 @@ enum TYPE {
 
 const ProblemPage = () => {
     const [auth,] = useAuthState();
+    const queryClient = new QueryClient();
     const state = useLocation().state as { initialType: string };
     const { mutate: authMutate, isLoading: isAuthLoading } = useAuth();
     const { dumpId, questionId }: { dumpId: string, questionId: string } = useParams() as any;
-    const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problem>(['dumps', dumpId, questionId], () => getProblem(dumpId, questionId), { enabled: !!auth });
     const [korean, setKorean] = useState<boolean>(true);
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
+    const [type, setType] = useState<string>('sequence');
     const [pressed, setPressed] = useState<string[] | null>(null);
     const [mark, setMark] = useState<boolean>(false);
     const navigate = useNavigate();
     const keyboardControllerRef = useRef<HTMLInputElement>(null) as any;
+    const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problem>(['question', dumpId, questionId, type], () => getProblem(dumpId, questionId), { enabled: !!auth });
+
+    const { data:markData, mutate, mutateAsync } = useMutation(setMarkProblem);
 
     useEffect(() => {
         keyboardControllerRef.current.focus();
         setKorean(true);
         setShowAnswer(false);
         setPressed(null);
+        setMark(data?.marked ? true : false)
     }, [data])
 
     useEffect(() => {
@@ -48,7 +53,7 @@ const ProblemPage = () => {
     }, [auth]);
 
     useEffect(() => {
-        //state.initialType 으로 셀렉트박스 값 설정
+        if (state?.initialType) setType(state.initialType)
     }, [state]);
 
     useEffect(() => {
@@ -64,8 +69,18 @@ const ProblemPage = () => {
     }, [showAnswer])
     
     const toggleMark = useCallback(() => {
-        setMark(!mark);
-    }, [mark]);
+        mutate({
+            dumpId,
+            questionId,
+            mark: !mark
+        });
+        //queryClient.invalidateQueries(['question', dumpId, questionId, type]);
+    }, [mark, dumpId, questionId, type]);
+
+    useEffect(() => {
+        if (markData !== undefined) setMark(markData.marked)
+    }, [markData]);
+
     const changeType = useCallback((e: any) => {
         setType(e.target.value)
     },[]);
@@ -129,7 +144,7 @@ const ProblemPage = () => {
 
                 <div className="flex items-center mt-4 sm:mt-0">
                     <button role="button" aria-label="마킹하기/마킹해제" onClick={toggleMark}>
-                        <Star onClick={() => {}} checked={mark} />
+                        <Star checked={mark} />
                     </button>
                     <h3 className="text-3xl font-extrabold mr-4">Q{ questionId }</h3>
                     <Button className="py-2" onClick={changeLanguage} onKeyDown={ onKeyDown }>{korean ? '원문보기' : '한글보기'}</Button>

@@ -51,4 +51,13 @@ export async function getMarkedProblems(dumpId:string) {
     return data;
 }
 
+export async function setMarkProblem({ dumpId, questionId, mark }: any) {
+    const { data } = await client.post(`/marks/${dumpId}/${questionId}`, null, {
+        headers: {
+            method: mark ? 'POST' : 'DELETE'
+        }
+    });
+    return data;
+}
+
 export default client;
