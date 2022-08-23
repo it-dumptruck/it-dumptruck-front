@@ -26,8 +26,8 @@ const App: React.FC = () => {
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                         <Route path="/dumps">
-                            <Route path=":dumpId" element={<ProblemsPage/>} />
-                            <Route path=":dumpId/marked" element={<ProblemsPage/>} />
+                            <Route path=":dumpId" element={<ProblemsPage />} />
+                            <Route path=":dumpId/marked" element={<ProblemsPage />} />
                             <Route path=":dumpId/:questionId" element={<ProblemPage/>} />
                         </Route>
                         <Route path="/:uid" element={<HomePage/>} />

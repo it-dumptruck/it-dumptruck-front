@@ -1,10 +1,12 @@
-import React, { FC, useRef, useState } from 'react';
-import DumpItem from '../../components/DumpItem';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import LastUpdated from '../../components/lastUpdated';
 import ShortenQuestion from '../../components/ShortenQuestion';
 import DefaultTemplate from '../../templates/DefaultTemplate';
 
 const ProblemsPage = () => {
+    const { markedOnly }: { markedOnly: boolean } = useParams() as any;
+
     return (
         <DefaultTemplate>
             <h2 className="sr-only">문제 리스트 페이지</h2>

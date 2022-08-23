@@ -1,9 +1,9 @@
 import { IDump, Dumps, Problem, Auth } from './types.d';
-import axios, { Axios, HeadersDefaults } from "axios";
+import axios from "axios";
 
 axios.defaults.withCredentials = true;
 const client = axios.create({
-    baseURL: "https://api.dumps.kr",
+    baseURL: process.env.REACT_APP_API,
 });
 
 
