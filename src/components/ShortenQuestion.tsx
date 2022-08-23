@@ -2,11 +2,15 @@ import React, { useCallback } from 'react';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
-export default ({ dumpId, questionId, question, marked }: { dumpId: string, questionId: string, question: string, marked: boolean }) => {
+export default ({ dumpId, questionId, question, marked, markedOnly }: { dumpId: string, questionId: string, question: string, marked: boolean, markedOnly?: boolean }) => {
     const navigate = useNavigate();
 
     const moveToQuestionPage = useCallback(() => {
-        navigate(`/dumps/${dumpId}/${questionId}`)
+        navigate(`/dumps/${dumpId}/${questionId}`, {
+            state: {
+                initialType: (markedOnly ? 'marked' : 'sequence')
+            }
+        })
     }, [dumpId, questionId]);
 
     return (

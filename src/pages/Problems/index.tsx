@@ -1,28 +1,37 @@
 import React, { useEffect } from 'react';
 import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import LastUpdated from '../../components/lastUpdated';
 import ShortenQuestion from '../../components/ShortenQuestion';
 import { useAuthState } from '../../contexts/AuthContext';
 import { useAuth } from '../../hooks/useAuth';
 import DefaultTemplate from '../../templates/DefaultTemplate';
 import { Problems, ShortProblem } from '../../api/types';
-import { getProblems } from '../../api';
+import { getMarkedProblems, getProblems } from '../../api';
 import Loading from '../../components/Loading';
 
 const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
     const { dumpId }: { dumpId: string } = useParams() as any;
+    const navigate = useNavigate();
 
     const [auth, setAuth] = useAuthState();
     const { mutate: authMutate, isLoading: isAuthLoading } = useAuth();
-    const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problems>(['dumps', dumpId], () => getProblems(dumpId), { enabled: !!auth });
+    const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problems>(['questionList', dumpId, markedOnly], () => getProblemsWrapFn(dumpId), { enabled: !!auth, ...(markedOnly && { cacheTime: 0 }) })
     
+    const getProblemsWrapFn = (dumpId: any) => {
+        return markedOnly ? getMarkedProblems(dumpId) : getProblems(dumpId);
+    }
+
     useEffect(() => {
         if (!auth) {
             authMutate();
             refetch();
         }
     },[auth]);
+
+    useEffect(() => {
+        if (isError) navigate(`/errors/404`)
+    },[isError]);
 
     return (
         <DefaultTemplate>
@@ -44,10 +53,19 @@ const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
                                     question={dump.question}
                                     questionId={dump.questionID}
                                     marked={dump.marked}
+                                    markedOnly={markedOnly}
                                 />
                             })
                         }
                     </div>
+
+                    {
+                        data?.lists.length == 0 && 
+                        <div>
+                            마킹된 문제가 존재하지 않습니다.<br />
+                            문제에 마킹(☆)을 하면 해당 문제들을 모아 볼 수 있습니다.
+                        </div>
+                    }
                 </>
             }
 

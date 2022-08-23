@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 
 import { getAuth, getProblem, getProblems, setType } from '../../api';
@@ -22,6 +22,7 @@ enum TYPE {
 
 const ProblemPage = () => {
     const [auth,] = useAuthState();
+    const state = useLocation().state as { initialType: string };
     const { mutate: authMutate, isLoading: isAuthLoading } = useAuth();
     const { dumpId, questionId }: { dumpId: string, questionId: string } = useParams() as any;
     const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problem>(['dumps', dumpId, questionId], () => getProblem(dumpId, questionId), { enabled: !!auth });
@@ -45,6 +46,14 @@ const ProblemPage = () => {
             refetch();
         }
     }, [auth]);
+
+    useEffect(() => {
+        //state.initialType 으로 셀렉트박스 값 설정
+    }, [state]);
+
+    useEffect(() => {
+        if (isError) navigate(`/errors/404`)
+    },[isError]);
     
     const changeLanguage = useCallback(() => {
         setKorean(!korean)
@@ -95,6 +104,10 @@ const ProblemPage = () => {
         navigate(`/dumps/${dumpId}/${data?.next_id}`)
     }, [data]);
 
+    const moveToQuestionList = useCallback(() => {
+        navigate(`/dumps/${dumpId}`)
+    }, []);
+
     return (
         <DefaultTemplate>
             <label className="sr-only" htmlFor="keyboardControlDescription">방향키를 이용해 문제간 이동이 가능합니다. 위쪽 방향키를 눌러 정답 확인이 가능합니다.</label>
@@ -111,7 +124,7 @@ const ProblemPage = () => {
                         }
                     </select>
 
-                    <Button className="py-2 ml-2">목록 보기</Button>
+                    <Button className="py-2 ml-2" onClick={ moveToQuestionList }>목록 보기</Button>
                 </div>
 
                 <div className="flex items-center mt-4 sm:mt-0">
