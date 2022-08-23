@@ -6,6 +6,7 @@ import { ProblemContextProvider } from './contexts/ProblemContext';
 import HomePage from './pages/Home';
 import ProblemPage from './pages/Problem';
 import ProblemsPage from './pages/Problems';
+import ErrorPage from './pages/Error';
 
 
 // export interface RouteList {
@@ -26,9 +27,11 @@ const App: React.FC = () => {
                     <Route path="/" element={<HomePage />} />
                         <Route path="/dumps">
                             <Route path=":dumpId" element={<ProblemsPage/>} />
+                            <Route path=":dumpId/marked" element={<ProblemsPage/>} />
                             <Route path=":dumpId/:questionId" element={<ProblemPage/>} />
                         </Route>
                         <Route path="/:uid" element={<HomePage/>} />
+                        <Route path="/errors/:statusCode" element={<ErrorPage/>} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                 </BrowserRouter>

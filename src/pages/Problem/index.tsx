@@ -141,14 +141,19 @@ const ProblemPage = () => {
                 }
             </div>
 
-            <div className="mt-8" role="status" aria-label="정답 및 해설">
-                {showAnswer ? data?.answer : ''}
-            </div>
-
-            <div className="flex mt-16 justify-between">
+            <div className="flex mt-8 justify-between">
                 <Button className="px-8 sm:px-16 py-4" onClick={ movePrev } onKeyDown={ onKeyDown } disabled={ data?.prev_id == null }>이전</Button>
                 <Button className="px-8 sm:px-16 py-4" onClick={toggleAnswer} onKeyDown={ onKeyDown }>정답보기</Button>
                 <Button className="px-8 sm:px-16 py-4" onClick={ moveNext } onKeyDown={ onKeyDown } disabled={ data?.next_id == null }>다음</Button>
+            </div>
+
+            <div className="mt-8" role="status">
+                <div className="sr-only" aria-label="정답">
+                    {showAnswer ? data?.answer : ''}
+                </div>
+                <div aria-label="해설">
+                    {showAnswer ? data?.description : ''}
+                </div>
             </div>
         </DefaultTemplate>
     )

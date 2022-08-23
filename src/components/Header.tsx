@@ -25,6 +25,7 @@ const Header = ({ uid }: any) => {
         document.body.removeChild(tempInput);
 
         alert('복사되었습니다.')
+        setShowSaved(false)
     }, []);
 
     return (

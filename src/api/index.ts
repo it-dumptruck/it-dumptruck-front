@@ -3,7 +3,7 @@ import axios, { Axios, HeadersDefaults } from "axios";
 
 axios.defaults.withCredentials = true;
 const client = axios.create({
-    baseURL: "https://f5ih972vs1.execute-api.ap-northeast-2.amazonaws.com",
+    baseURL: "https://api.dumps.kr",
 });
 
 
