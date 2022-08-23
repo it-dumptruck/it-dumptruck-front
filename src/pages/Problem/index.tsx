@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
-import { FaStar, FaRegStar } from 'react-icons/fa';
 
 import { getAuth, getProblem, getProblems, setType } from '../../api';
 import { Problem } from '../../api/types';
@@ -13,6 +12,7 @@ import AnswerButton from '../../components/AnswerButton';
 import { useAuth } from '../../hooks/useAuth';
 import { useAuthState } from '../../contexts/AuthContext';
 import Loading from '../../components/Loading';
+import Star from '../../components/Star';
 
 enum TYPE { 
     SEQUENCE = 'sequence',
@@ -129,9 +129,7 @@ const ProblemPage = () => {
 
                 <div className="flex items-center mt-4 sm:mt-0">
                     <button role="button" aria-label="마킹하기/마킹해제" onClick={toggleMark}>
-                        {mark ? <FaStar className="text-2xl mr-2 text-yellow-400" />:
-                            <FaRegStar className="text-2xl mr-2 text-zinc-300" />
-                        }
+                        <Star onClick={() => {}} checked={mark} />
                     </button>
                     <h3 className="text-3xl font-extrabold mr-4">Q{ questionId }</h3>
                     <Button className="py-2" onClick={changeLanguage} onKeyDown={ onKeyDown }>{korean ? '원문보기' : '한글보기'}</Button>
