@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { VscSaveAll } from 'react-icons/vsc';
+import { Link } from 'react-router-dom';
 import Button from './Button';
 
 const Header = ({ uid }: any) => {
@@ -34,7 +35,7 @@ const Header = ({ uid }: any) => {
                 <div className="flex px-2">
                     <div className="basis-1/6"></div>
                     <h1 className="basis-2/3 text-zinc-50 text-3xl text-center font-cursive cursor-default select-none">
-                        <a href="/">IT DumpTruck</a>
+                        <Link to="/">IT DumpTruck</Link>
                     </h1>
                     <div className="basis-1/6 flex justify-end relative">
                         <button role="button" aria-label="진행상황 저장하기" onClick={ toggleSaved }><VscSaveAll className="text-white text-3xl" aria-hidden /></button>
