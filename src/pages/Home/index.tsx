@@ -12,7 +12,7 @@ import { useAuth } from '../../hooks/useAuth';
 import DefaultTemplate from '../../templates/DefaultTemplate';
 
 const HomePage = () => {
-    const [auth, ] = useAuthState();
+    const [auth, setAuth] = useAuthState();
     const { mutate: authMutate, isLoading: isAuthLoading } = useAuth();
     const { data: dumps, isLoading: dumpsLoading, refetch, isSuccess,isFetching,isError,isIdle } = useQuery<IDump[]>('dumps', getDumpsLists, {
         enabled:false
