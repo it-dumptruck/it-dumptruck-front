@@ -75,6 +75,7 @@ const ProblemPage = () => {
             mark: !mark
         });
         //queryClient.invalidateQueries(['question', dumpId, questionId, type]);
+        //queryClient.invalidateQueries(['questionList', dumpId, true]);
     }, [mark, dumpId, questionId, type]);
 
     useEffect(() => {

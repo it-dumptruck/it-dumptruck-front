@@ -16,7 +16,7 @@ const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
 
     const [auth, setAuth] = useAuthState();
     const { mutate: authMutate, isLoading: isAuthLoading } = useAuth();
-    const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problems>(['questionList', dumpId, markedOnly], () => getProblemsWrapFn(dumpId), { enabled: !!auth, ...(markedOnly && { cacheTime: 0 }) })
+    const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problems>(['questionList', dumpId, markedOnly], () => getProblemsWrapFn(dumpId), { enabled: !!auth })
     
     const getProblemsWrapFn = (dumpId: any) => {
         return markedOnly ? getMarkedProblems(dumpId) : getProblems(dumpId);
