@@ -41,8 +41,8 @@ export async function getDumpsLists():Promise<IDump[]> {
 }
 
 
-export async function getProblems(dumpId:string,questionToken:string ) {
-    const { data } = await client.get("/dumps");
+export async function getProblems(dumpId:string ) {
+    const { data } = await client.get(`/dumps/${dumpId}`);
     return data;
 }
 

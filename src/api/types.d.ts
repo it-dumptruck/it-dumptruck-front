@@ -28,6 +28,19 @@ export type Problem = {
     marked: boolean;
     user_answer?: string[];
 }
+
+export type ShortProblem = {
+    id: number;
+    questionID: string;
+    question: string;
+    marked: boolean;
+}
+
+export type Problems = {
+    dump: IDumpItem;
+    lists: ShortProblem[];
+}
+
 export type Auth = {
     token: string | null;
     uid: string | null;
