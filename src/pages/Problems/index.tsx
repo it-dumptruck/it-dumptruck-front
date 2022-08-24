@@ -9,6 +9,7 @@ import DefaultTemplate from '../../templates/DefaultTemplate';
 import { Problems, ShortProblem } from '../../api/types';
 import { getMarkedProblems, getProblems } from '../../api';
 import Loading from '../../components/Loading';
+import Ad from '../../components/Ad';
 
 const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
     const { dumpId }: { dumpId: string } = useParams() as any;
@@ -68,7 +69,6 @@ const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
                     }
                 </>
             }
-
 
         </DefaultTemplate>
     )

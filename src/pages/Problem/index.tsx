@@ -13,6 +13,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { useAuthState } from '../../contexts/AuthContext';
 import Loading from '../../components/Loading';
 import Star from '../../components/Star';
+import Ad from '../../components/Ad';
 
 enum TYPE { 
     SEQUENCE = 'sequence',
@@ -176,6 +177,8 @@ const ProblemPage = () => {
                 <Button className="px-8 sm:px-16 py-4" onClick={toggleAnswer} onKeyDown={ onKeyDown }>정답보기</Button>
                 <Button className="px-8 sm:px-16 py-4" onClick={ moveNext } onKeyDown={ onKeyDown } disabled={ data?.next_id == null }>다음</Button>
             </div>
+
+            <Ad className="mt-2" />
 
             <div className="mt-8" role="status">
                 <div className="sr-only" aria-label="정답">
