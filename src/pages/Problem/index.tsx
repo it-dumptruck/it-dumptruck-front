@@ -101,6 +101,7 @@ const ProblemPage = () => {
         if (e.keyCode == 37) movePrev();
         else if (e.keyCode == 39) moveNext();
         else if (e.keyCode == 38) setShowAnswer(!showAnswer);
+        else if (e.keyCode == 192 || e.keyCode == 77) toggleMark();
 
         let char;
         if (e.keyCode >= 49 && e.keyCode <= 57) char = e.keyCode + 16;
@@ -108,7 +109,7 @@ const ProblemPage = () => {
         else return;
         
         onPressList(String.fromCharCode(char))
-    }, [data, showAnswer, pressed]);
+    }, [data, showAnswer, pressed, mark, dumpId, questionId, type]);
 
     const movePrev = useCallback(() => {
         if (!data?.prev_id) return;
@@ -125,7 +126,6 @@ const ProblemPage = () => {
     const moveToQuestionList = useCallback(() => {
         navigate(`/dumps/${dumpId}`)
     }, []);
-    
 
 
     return (
