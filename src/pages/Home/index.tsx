@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
-import { useMatch, useParams, useRoutes } from 'react-router-dom';
+import { useMatch, useNavigate, useParams, useRoutes } from 'react-router-dom';
 import { isIfStatement } from 'typescript';
 import client, { getAuth, getDumpsLists, setToken, setUid } from '../../api';
 import { IDump } from '../../api/types';
@@ -17,10 +17,20 @@ import DefaultTemplate from '../../templates/DefaultTemplate';
 const HomePage = () => {
     const { uid } = useParams();
     const [auth, setAuth] = useAuthState();
+    const navigate = useNavigate();
     const { mutate: authMutate, isLoading: isAuthLoading } = useAuth();
     const { data: dumps, isLoading: dumpsLoading, refetch, isSuccess,isFetching,isError,isIdle } = useQuery<IDump[]>('dumps', getDumpsLists, {
         enabled: !!auth,
-        retry:1
+        retry: 1,
+        onError: (error: any) => {
+            // navigate(`/errors/${error.response.status}`)
+            if (error.response.status === 401) {
+                authMutate();
+                refetch();
+            } else {
+                navigate(`/errors/${error.response.status}`);
+            }
+        }
     });
 
     useEffect(() => {
@@ -29,12 +39,12 @@ const HomePage = () => {
         authMutate();
     }, [setUid, authMutate])
     
-    useEffect(() => {
-        if (isError) {
-            authMutate();
-            refetch();
-        }
-    },[isError])
+    // useEffect(() => {
+    //     if (isError) {
+    //         authMutate();
+    //         refetch();
+    //     }
+    // },[isError])
 
     return (
         <DefaultTemplate>

@@ -17,18 +17,28 @@ const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
 
     const [auth, setAuth] = useAuthState();
     const { mutate: authMutate, isLoading: isAuthLoading } = useAuth();
-    const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problems>(['questionList', dumpId, markedOnly], () => getProblemsWrapFn(dumpId), { enabled: !!auth, cacheTime: 0, retry:1 })
+    const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problems>(['questionList', dumpId, markedOnly], () => getProblemsWrapFn(dumpId), {
+        enabled: !!auth, cacheTime: 0, retry: 1,
+        onError: (error: any) => {
+            // navigate(`/errors/${error.response.status}`)
+            if (error.response.status === 401) {
+                authMutate();
+                refetch();
+            } else {
+                navigate(`/errors/${error.response.status}`);
+            }
+        }})
     
     const getProblemsWrapFn = (dumpId: any) => {
         return markedOnly ? getMarkedProblems(dumpId) : getProblems(dumpId);
     }
 
-    useEffect(() => {
-        if (isError) {
-            authMutate();
-            refetch();
-        }
-    }, [isError]);
+    // useEffect(() => {
+    //     if (isError) {
+    //         authMutate();
+    //         refetch();
+    //     }
+    // }, [isError]);
 
     return (
         <DefaultTemplate>
