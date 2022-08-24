@@ -62,7 +62,7 @@ const ProblemPage = () => {
     }, [state]);
 
     useEffect(() => {
-        if (isError) navigate(`/errors/404`)
+        //if (isError) navigate(`/errors/404`)
     },[isError]);
     
     const changeLanguage = useCallback(() => {

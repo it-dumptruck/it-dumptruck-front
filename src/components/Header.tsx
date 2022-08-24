@@ -5,7 +5,7 @@ import Button from './Button';
 import authStorage from "../storages/authStorage";
 
 const Header = () => {
-    const url = process.env.REACT_APP_URL + authStorage.get().uid;
+    const url = process.env.REACT_APP_URL + authStorage.get()?.uid;
     const [showSaved, setShowSaved] = useState<boolean>(true);
 
     useEffect(() => {
