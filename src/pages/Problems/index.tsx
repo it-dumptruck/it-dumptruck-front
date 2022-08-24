@@ -24,6 +24,13 @@ const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
     }
 
     useEffect(() => {
+        if (isError) {
+            authMutate();
+            refetch();
+        }
+    }, [isError]);
+
+    useEffect(() => {
         if (!auth) {
             authMutate();
             refetch();
