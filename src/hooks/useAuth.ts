@@ -7,7 +7,7 @@ export const useAuth = () => {
     const [ ,setAuth] = useAuthState();
     return useMutation(getAuth, {
         onError: (e) => {
-            console.log("TOKEN ERROR",e);
+            throw new Error("AUTH ERROR")
         },
         onSuccess: (data) => {
             setAuth(data);
