@@ -18,12 +18,6 @@ export function clearToken() {
     client.defaults.headers.common['uid'] = '';
 }
 
-
-export function setHeaderType(type: string) { 
-    console.log("type", type)
-    client.defaults.headers.common['type'] = type;
-}
-
 export async function getAuth(){
     const { data } = await client.get('/auth');
     setToken(data.token)
@@ -31,8 +25,12 @@ export async function getAuth(){
 }
 
 
-export async function getProblem(dumpId:string,questionToken:string ):Promise<Problem> {
-    const { data } = await client.get(`/dumps/${dumpId}/${questionToken}`);
+export async function getProblem(dumpId: string, questionToken: string, type: string):Promise<Problem> {
+    const { data } = await client.get(`/dumps/${dumpId}/${questionToken}`, {
+        headers: {
+            type
+        }
+    });
     return data;
 }
 

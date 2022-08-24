@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
 import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 
-import { getAuth, getProblem, getProblems, setMarkProblem, setHeaderType } from '../../api';
+import { getAuth, getProblem, getProblems, setMarkProblem } from '../../api';
 import { Problem } from '../../api/types';
 import { useProblemState } from '../../contexts/ProblemContext';
 
@@ -22,7 +22,6 @@ enum TYPE {
 
 const ProblemPage = () => {
     const [auth,] = useAuthState();
-    const queryClient = useQueryClient();
     const state = useLocation().state as { initialType: string };
     const { mutate: authMutate, isLoading: isAuthLoading } = useAuth();
     const { dumpId, questionId }: { dumpId: string, questionId: string } = useParams() as any;
@@ -33,7 +32,7 @@ const ProblemPage = () => {
     const [mark, setMark] = useState<boolean>(false);
     const navigate = useNavigate();
     const keyboardControllerRef = useRef<HTMLInputElement>(null) as any;
-    const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problem>(['question', dumpId, questionId, type], () => getProblem(dumpId, questionId), { enabled: !!auth, cacheTime:0 }, );
+    const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problem>(['question', dumpId, questionId, type], () => getProblem(dumpId, questionId, type), { enabled: !!auth, cacheTime: 0 }, );
 
     const { data:markData, mutate, mutateAsync } = useMutation(setMarkProblem);
 
@@ -69,13 +68,12 @@ const ProblemPage = () => {
     }, [showAnswer])
     
     const toggleMark = useCallback(() => {
-        mutateAsync({
+        setMark(!mark)
+        mutate({
             dumpId,
             questionId,
             mark: !mark
         });
-        //queryClient.invalidateQueries(['question', dumpId, questionId, type]);
-        //queryClient.invalidateQueries(['questionList', dumpId, true]);
     }, [mark, dumpId, questionId, type]);
 
     useEffect(() => {
@@ -84,9 +82,8 @@ const ProblemPage = () => {
 
     const changeType = useCallback((e: any) => {
         setType(e.target.value);
-        setHeaderType(e.target.value);
         refetch();
-    }, [type, refetch,setHeaderType]);
+    }, [type, refetch]);
     
     const onPressList = useCallback((key: any) => {
         const isPress = pressed?.filter(i => i === key)
@@ -132,9 +129,11 @@ const ProblemPage = () => {
             <input id="keyboardControlDescription" type="text" className="bg-slate-200 absolute top-[-999px] left-[-999px]" onKeyDown={ onKeyDown } ref={ keyboardControllerRef } autoFocus readOnly />
             <h2 className="sr-only">문제 풀이 페이지</h2>
 
-            <div className="sm:flex sm:flex-row-reverse justify-between">
+            {
+                data && 
+                <div className="sm:flex sm:flex-row-reverse justify-between">
                 <div className="flex">
-                    <select className="border rounded px-2" onChange={changeType} onKeyDown={ onKeyDown }>
+                    <select className="border rounded px-2" onChange={changeType} onKeyDown={ onKeyDown } value={ type }>
                         <option value={`${TYPE.SEQUENCE}`}>차례로 풀기</option>
                         <option value={`${TYPE.RANDOM}`}>무작위로 풀기</option>
                         {
@@ -149,10 +148,12 @@ const ProblemPage = () => {
                     <button role="button" aria-label="마킹하기/마킹해제" onClick={toggleMark}>
                         <Star checked={mark} />
                     </button>
-                    <h3 className="text-3xl font-extrabold mr-4">Q{ questionId }</h3>
+                    <h3 className="text-3xl font-extrabold mr-4">Q{ data?.id }</h3>
                     <Button className="py-2" onClick={changeLanguage} onKeyDown={ onKeyDown }>{korean ? '원문보기' : '한글보기'}</Button>
                 </div>
             </div>
+            }
+
             <article className="whitespace-pre-line tracking-tight leading-6 mt-4 mb-8" style={{ wordSpacing: '2px' }}>
                 {
                     data ? (korean ? data.question : data?.question_en)
