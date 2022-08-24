@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useMatch, useParams, useRoutes } from 'react-router-dom';
+import { isIfStatement } from 'typescript';
 import client, { getAuth, getDumpsLists, setToken, setUid } from '../../api';
 import { IDump } from '../../api/types';
 import DumpList from '../../components/DumpList';
@@ -18,21 +19,23 @@ const HomePage = () => {
     const [auth, setAuth] = useAuthState();
     const { mutate: authMutate, isLoading: isAuthLoading } = useAuth();
     const { data: dumps, isLoading: dumpsLoading, refetch, isSuccess,isFetching,isError,isIdle } = useQuery<IDump[]>('dumps', getDumpsLists, {
-        enabled: !!auth
+        enabled: !!auth,
+        retry:1
     });
 
-    // useEffect(() => {
-    //     if (!auth) {
-    //         authMutate();
-    //         refetch();
-    //     }
-    // },[auth]);
     useEffect(() => {
         if (!uid) return;
         setUid(uid);
         authMutate();
     }, [setUid, authMutate])
     
+    useEffect(() => {
+        if (isError) {
+            authMutate();
+            refetch();
+        }
+    },[isError])
+
     return (
         <DefaultTemplate>
             <h2 className="sr-only">덤프 목록</h2>

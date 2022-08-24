@@ -33,10 +33,15 @@ const ProblemPage = () => {
     const [mark, setMark] = useState<boolean>(false);
     const navigate = useNavigate();
     const keyboardControllerRef = useRef<HTMLInputElement>(null) as any;
-    const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problem>(['question', dumpId, questionId, type], () => getProblem(dumpId, questionId, type), { enabled: !!auth, cacheTime: 0 }, );
+    const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problem>(['question', dumpId, questionId, type], () => getProblem(dumpId, questionId, type), { enabled: !!auth, cacheTime: 0, retry:0 }, );
 
     const { data:markData, mutate, mutateAsync } = useMutation(setMarkProblem);
-
+    useEffect(() => {
+        if (isError) {
+            authMutate();
+            refetch();
+        }
+    }, [isError]);
     useEffect(() => {
         keyboardControllerRef.current.focus();
         setKorean(true);
@@ -80,7 +85,7 @@ const ProblemPage = () => {
     useEffect(() => {
         if (markData !== undefined) setMark(markData.marked)
     }, [markData]);
-
+    
     const changeType = useCallback((e: any) => {
         setType(e.target.value);
         refetch();
@@ -123,6 +128,8 @@ const ProblemPage = () => {
     const moveToQuestionList = useCallback(() => {
         navigate(`/dumps/${dumpId}`)
     }, []);
+    
+
 
     return (
         <DefaultTemplate>
