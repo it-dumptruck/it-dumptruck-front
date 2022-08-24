@@ -20,22 +20,22 @@ const queryClient = new QueryClient();
 const App: React.FC = () => {
     return (
         <AuthProvider>
-        <ProblemContextProvider>
-            <QueryClientProvider client={queryClient}>
-                <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                        <Route path="/dumps">
-                            <Route path=":dumpId" element={<ProblemsPage />} />
-                            <Route path=":dumpId/marked" element={<ProblemsPage markedOnly />} />
-                            <Route path=":dumpId/:questionId" element={<ProblemPage />} />
-                        </Route>
-                        <Route path="/:uid" element={<HomePage/>} />
-                        <Route path="/errors/:statusCode" element={<ErrorPage/>} />
-                        <Route path="*" element={<Navigate to="/" />} />
-                    </Routes>
-                </BrowserRouter>
-            </QueryClientProvider>
+            <ProblemContextProvider>
+                <QueryClientProvider client={queryClient}>
+                    <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<HomePage />} />
+                            <Route path="/dumps">
+                                <Route path=":dumpId" element={<ProblemsPage />} />
+                                <Route path=":dumpId/marked" element={<ProblemsPage markedOnly />} />
+                                <Route path=":dumpId/:questionId" element={<ProblemPage />} />
+                            </Route>
+                            <Route path="/:uid" element={<HomePage/>} />
+                            <Route path="/errors/:statusCode" element={<ErrorPage/>} />
+                            <Route path="*" element={<Navigate to="/" />} />
+                        </Routes>
+                    </BrowserRouter>
+                </QueryClientProvider>
             </ProblemContextProvider>
         </AuthProvider>
     );

@@ -45,12 +45,12 @@ const ProblemPage = () => {
         setMark(data?.marked ? true : false)
     }, [data])
 
-    useEffect(() => {
-        if (!auth) {
-            authMutate();
-            refetch();
-        }
-    }, [auth]);
+    // useEffect(() => {
+    //     if (!auth) {
+    //         authMutate();
+    //         refetch();
+    //     }
+    // }, [auth]);
 
     useEffect(() => {
         if (state?.initialType) setType(state.initialType)

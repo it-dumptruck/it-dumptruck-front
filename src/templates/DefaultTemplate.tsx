@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import useAuthLoadEffect from '../hooks/useAuthLoadEffect';
 import Ad from '../components/Ad';
 
 const DefaultTemplate = ({ children }:any) => {

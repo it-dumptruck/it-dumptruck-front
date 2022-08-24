@@ -1,13 +1,32 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useLayoutEffect, useState } from "react";
+import { getAuth, setToken } from "../api";
 import { Auth } from "../api/types";
+import authStorage from "../storages/authStorage";
 
 export type AuthContextState = [Auth | null, (data: Auth| null) => void];
 
 const AuthContext = createContext<AuthContextState | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    const auth = useState<Auth | null>(null);
-    return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
+    const [auth, setAuth] = useState<Auth | null>(null);
+    useLayoutEffect(() => {
+        (async () => {
+            const getTokenRequest = async () => {
+                const token = await getAuth();
+                return token;
+            }
+            let localAuthData = authStorage.get();
+            console.log(localAuthData)
+            if (!localAuthData?.uid) {
+                localAuthData = await getTokenRequest();
+            }
+            setAuth(localAuthData);
+            setToken(localAuthData);
+            authStorage.set(localAuthData);
+        })();
+        
+    }, [setAuth,setToken]);
+    return <AuthContext.Provider value={[auth, setAuth]}>{children}</AuthContext.Provider>
 }
 
 export const useAuthState = () => {
