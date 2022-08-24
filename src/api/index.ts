@@ -24,7 +24,6 @@ export function clearToken() {
 
 export async function getAuth(){
     const { data } = await client.get('/auth');
-    // setToken(data.token)
     setToken(data);
     return data;
 }

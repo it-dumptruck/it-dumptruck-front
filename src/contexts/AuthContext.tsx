@@ -16,7 +16,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 return token;
             }
             let localAuthData = authStorage.get();
-            console.log(localAuthData)
             if (!localAuthData?.uid) {
                 localAuthData = await getTokenRequest();
             }
