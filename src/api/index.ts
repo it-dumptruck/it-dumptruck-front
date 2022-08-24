@@ -19,7 +19,8 @@ export function clearToken() {
 }
 
 
-export function setType(type:string = "sequence") { 
+export function setHeaderType(type: string) { 
+    console.log("type", type)
     client.defaults.headers.common['type'] = type;
 }
 

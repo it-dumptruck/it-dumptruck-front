@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
 import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 
-import { getAuth, getProblem, getProblems, setMarkProblem, setType } from '../../api';
+import { getAuth, getProblem, getProblems, setMarkProblem, setHeaderType } from '../../api';
 import { Problem } from '../../api/types';
 import { useProblemState } from '../../contexts/ProblemContext';
 
@@ -16,7 +16,7 @@ import Star from '../../components/Star';
 
 enum TYPE { 
     SEQUENCE = 'sequence',
-    RANDOM = 'reandom',
+    RANDOM = 'random',
     MARKED = 'marked'
 }
 
@@ -33,7 +33,7 @@ const ProblemPage = () => {
     const [mark, setMark] = useState<boolean>(false);
     const navigate = useNavigate();
     const keyboardControllerRef = useRef<HTMLInputElement>(null) as any;
-    const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problem>(['question', dumpId, questionId, type], () => getProblem(dumpId, questionId), { enabled: !!auth });
+    const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problem>(['question', dumpId, questionId, type], () => getProblem(dumpId, questionId), { enabled: !!auth, cacheTime:0 }, );
 
     const { data:markData, mutate, mutateAsync } = useMutation(setMarkProblem);
 
@@ -83,9 +83,11 @@ const ProblemPage = () => {
     }, [markData]);
 
     const changeType = useCallback((e: any) => {
-        setType(e.target.value)
-    },[]);
-
+        setType(e.target.value);
+        setHeaderType(e.target.value);
+        refetch();
+    }, [type, refetch,setHeaderType]);
+    
     const onPressList = useCallback((key: any) => {
         const isPress = pressed?.filter(i => i === key)
         if (!isPress || !pressed) setPressed([key]);
