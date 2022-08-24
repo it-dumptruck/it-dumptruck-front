@@ -30,17 +30,6 @@ const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
         }
     }, [isError]);
 
-    useEffect(() => {
-        if (!auth) {
-            authMutate();
-            refetch();
-        }
-    },[auth]);
-
-    useEffect(() => {
-        if (isError) navigate(`/errors/404`)
-    },[isError]);
-
     return (
         <DefaultTemplate>
             <h2 className="sr-only">문제 리스트 페이지</h2>

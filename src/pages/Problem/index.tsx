@@ -42,6 +42,7 @@ const ProblemPage = () => {
             refetch();
         }
     }, [isError]);
+
     useEffect(() => {
         keyboardControllerRef.current.focus();
         setKorean(true);
@@ -60,10 +61,6 @@ const ProblemPage = () => {
     useEffect(() => {
         if (state?.initialType) setType(state.initialType)
     }, [state]);
-
-    useEffect(() => {
-        //if (isError) navigate(`/errors/404`)
-    },[isError]);
     
     const changeLanguage = useCallback(() => {
         setKorean(!korean)
