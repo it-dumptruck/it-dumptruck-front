@@ -22,7 +22,7 @@ enum TYPE {
 
 const ProblemPage = () => {
     const [auth,] = useAuthState();
-    const queryClient = new QueryClient();
+    const queryClient = useQueryClient();
     const state = useLocation().state as { initialType: string };
     const { mutate: authMutate, isLoading: isAuthLoading } = useAuth();
     const { dumpId, questionId }: { dumpId: string, questionId: string } = useParams() as any;
@@ -69,7 +69,7 @@ const ProblemPage = () => {
     }, [showAnswer])
     
     const toggleMark = useCallback(() => {
-        mutate({
+        mutateAsync({
             dumpId,
             questionId,
             mark: !mark
