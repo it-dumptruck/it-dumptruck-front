@@ -22,10 +22,9 @@ const HomePage = () => {
     const { data: dumps, isLoading: dumpsLoading, refetch, isSuccess,isFetching,isError,isIdle } = useQuery<IDump[]>('dumps', getDumpsLists, {
         enabled: !!auth,
         retry: 1,
-        onError: (error: any) => {
-            // navigate(`/errors/${error.response.status}`)
+        onError: async (error: any) => {
             if (error.response.status === 401) {
-                authMutate();
+                await authMutate();
                 refetch();
             } else {
                 navigate(`/errors/${error.response.status}`);
@@ -38,13 +37,6 @@ const HomePage = () => {
         setUid(uid);
         authMutate();
     }, [setUid, authMutate])
-    
-    // useEffect(() => {
-    //     if (isError) {
-    //         authMutate();
-    //         refetch();
-    //     }
-    // },[isError])
 
     return (
         <DefaultTemplate>

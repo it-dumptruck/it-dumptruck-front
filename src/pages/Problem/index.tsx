@@ -24,7 +24,7 @@ enum TYPE {
 const ProblemPage = () => {
     const [auth,] = useAuthState();
     const state = useLocation().state as { initialType: string };
-    const { mutate: authMutate, isLoading: isAuthLoading } = useAuth();
+    const { mutateAsync: authMutate, isLoading: isAuthLoading } = useAuth();
     const { dumpId, questionId }: { dumpId: string, questionId: string } = useParams() as any;
     const [korean, setKorean] = useState<boolean>(true);
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
@@ -35,11 +35,10 @@ const ProblemPage = () => {
     const keyboardControllerRef = useRef<HTMLInputElement>(null) as any;
     const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problem>(
         ['question', dumpId, questionId, type], () => getProblem(dumpId, questionId, type), {
-            enabled: !!auth, cacheTime: 0, retry: 0,
-            onError: (error: any) => {
-                // navigate(`/errors/${error.response.status}`)
+            enabled: !!auth, cacheTime: 0, retry: 1,
+            onError: async (error: any) => {
                 if (error.response.status === 401) {
-                    authMutate();
+                    await authMutate();
                     refetch();
                 } else {
                     navigate(`/errors/${error.response.status}`);
@@ -47,14 +46,17 @@ const ProblemPage = () => {
             }
     });
 
-    const { data:markData, mutate, mutateAsync } = useMutation(setMarkProblem);
-
-    // useEffect(() => {
-    //     if (isError) {
-    //         authMutate();
-    //         refetch();
-    //     }
-    // }, [isError]);
+    const { data:markData, mutate, mutateAsync, isLoading:markIsLoading } = useMutation(setMarkProblem, {
+        onError: async (error: any) => {
+            // navigate(`/errors/${error.response.status}`)
+            if (error.response.status === 401) {
+                await authMutate();
+                toggleMark()
+            } else {
+                navigate(`/errors/${error.response.status}`);
+            }
+        }
+    });
 
     useEffect(() => {
         keyboardControllerRef.current.focus();
@@ -84,13 +86,15 @@ const ProblemPage = () => {
     }, [showAnswer])
     
     const toggleMark = useCallback(() => {
+        if (markIsLoading) return;
+
         setMark(!mark)
         mutate({
             dumpId,
             questionId,
             mark: !mark
         });
-    }, [mark, dumpId, questionId, type]);
+    }, [mark, dumpId, questionId, type, markIsLoading]);
 
     useEffect(() => {
         if (markData !== undefined) setMark(markData.marked)
@@ -163,7 +167,7 @@ const ProblemPage = () => {
                 </div>
 
                 <div className="flex items-center mt-4 sm:mt-0">
-                    <button role="button" aria-label="마킹하기/마킹해제" onClick={toggleMark}>
+                    <button role="button" aria-label="마킹하기/마킹해제" onClick={toggleMark} disabled={markIsLoading}>
                         <Star checked={mark} />
                     </button>
                     <h3 className="text-3xl font-extrabold mr-4">Q{ data?.id }</h3>
