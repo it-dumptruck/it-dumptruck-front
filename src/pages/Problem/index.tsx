@@ -81,12 +81,17 @@ const ProblemPage = () => {
         if (markIsLoading) return;
 
         setMark(!mark)
+        setType('sequence');
         mutate({
             dumpId,
             questionId,
             mark: !mark
         });
     }, [mark, dumpId, questionId, type, markIsLoading]);
+
+    useEffect(() => {
+        refetch();
+    }, [type]);
 
     useEffect(() => {
         if (markData !== undefined) setMark(markData.marked)
