@@ -13,6 +13,10 @@ export function setToken({ token, uid }: Auth) {
     client.defaults.headers.common['uid'] = uid;
 }
 
+export function setUid(uid:string) { 
+    client.defaults.headers.common['uid'] = uid;
+}
+
 export function clearToken() {
     client.defaults.headers.common['token'] = '';
     client.defaults.headers.common['uid'] = '';
@@ -26,7 +30,8 @@ export function setHeaderType(type: string) {
 
 export async function getAuth(){
     const { data } = await client.get('/auth');
-    setToken(data.token)
+    // setToken(data.token)
+    setToken(data);
     return data;
 }
 

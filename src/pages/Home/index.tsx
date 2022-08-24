@@ -1,30 +1,38 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
-import { useMatch, useRoutes } from 'react-router-dom';
-import client, { getAuth, getDumpsLists, setToken } from '../../api';
+import { useMatch, useParams, useRoutes } from 'react-router-dom';
+import client, { getAuth, getDumpsLists, setToken, setUid } from '../../api';
 import { IDump } from '../../api/types';
 import DumpList from '../../components/DumpList';
 import Loading from '../../components/Loading';
 import { useAuthState } from '../../contexts/AuthContext';
 import { ProblemContextState, useProblemState } from '../../contexts/ProblemContext';
 import { useAuth } from '../../hooks/useAuth';
+import useAuthLoadEffect from '../../hooks/useAuthLoadEffect';
+import authStorage from '../../storages/authStorage';
 import DefaultTemplate from '../../templates/DefaultTemplate';
 
 const HomePage = () => {
+    const { uid } = useParams();
     const [auth, setAuth] = useAuthState();
     const { mutate: authMutate, isLoading: isAuthLoading } = useAuth();
     const { data: dumps, isLoading: dumpsLoading, refetch, isSuccess,isFetching,isError,isIdle } = useQuery<IDump[]>('dumps', getDumpsLists, {
-        enabled:false
+        enabled: !!auth
     });
-    
-    useEffect(() => {
-        if (!auth) {
-            authMutate();
-            refetch();
-        }
-    },[auth]);
 
+    // useEffect(() => {
+    //     if (!auth) {
+    //         authMutate();
+    //         refetch();
+    //     }
+    // },[auth]);
+    useEffect(() => {
+        if (!uid) return;
+        setUid(uid);
+        authMutate();
+    }, [setUid, authMutate])
+    
     return (
         <DefaultTemplate>
             <h2 className="sr-only">덤프 목록</h2>
