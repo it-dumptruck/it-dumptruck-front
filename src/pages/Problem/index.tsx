@@ -48,7 +48,6 @@ const ProblemPage = () => {
 
     const { data:markData, mutate, mutateAsync, isLoading:markIsLoading } = useMutation(setMarkProblem, {
         onError: async (error: any) => {
-            // navigate(`/errors/${error.response.status}`)
             if (error.response.status === 401) {
                 await authMutate();
                 toggleMark()
@@ -65,13 +64,6 @@ const ProblemPage = () => {
         setPressed(null);
         setMark(data?.marked ? true : false)
     }, [data])
-
-    // useEffect(() => {
-    //     if (!auth) {
-    //         authMutate();
-    //         refetch();
-    //     }
-    // }, [auth]);
 
     useEffect(() => {
         if (state?.initialType) setType(state.initialType)
