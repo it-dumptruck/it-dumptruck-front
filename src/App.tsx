@@ -32,7 +32,7 @@ const App: React.FC = () => {
                             </Route>
                             <Route path="/:uid" element={<HomePage/>} />
                             <Route path="/errors/:statusCode" element={<ErrorPage/>} />
-                            <Route path="*" element={<Navigate to="/" />} />
+                            {/* <Route path="*" element={<Navigate to="/" />} /> */}
                         </Routes>
                     </BrowserRouter>
                 </QueryClientProvider>

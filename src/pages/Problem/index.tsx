@@ -33,15 +33,27 @@ const ProblemPage = () => {
     const [mark, setMark] = useState<boolean>(false);
     const navigate = useNavigate();
     const keyboardControllerRef = useRef<HTMLInputElement>(null) as any;
-    const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problem>(['question', dumpId, questionId, type], () => getProblem(dumpId, questionId, type), { enabled: !!auth, cacheTime: 0, retry:1 }, );
+    const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problem>(
+        ['question', dumpId, questionId, type], () => getProblem(dumpId, questionId, type), {
+            enabled: !!auth, cacheTime: 0, retry: 0,
+            onError: (error: any) => {
+                // navigate(`/errors/${error.response.status}`)
+                if (error.response.status === 401) {
+                    authMutate();
+                    refetch();
+                } else {
+                    navigate(`/errors/${error.response.status}`);
+                }
+            }
+    });
 
     const { data:markData, mutate, mutateAsync } = useMutation(setMarkProblem);
-    useEffect(() => {
-        if (isError) {
-            authMutate();
-            refetch();
-        }
-    }, [isError]);
+    // useEffect(() => {
+    //     if (isError) {
+    //         authMutate();
+    //         refetch();
+    //     }
+    // }, [isError]);
     useEffect(() => {
         keyboardControllerRef.current.focus();
         setKorean(true);
