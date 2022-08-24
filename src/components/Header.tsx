@@ -1,9 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useId, useState } from 'react';
 import { VscSaveAll } from 'react-icons/vsc';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Button from './Button';
+import authStorage from "../storages/authStorage";
 
-const Header = ({ uid }: any) => {
+const Header = () => {
+    const url = process.env.REACT_APP_URL + authStorage.get().uid;
     const [showSaved, setShowSaved] = useState<boolean>(true);
 
     useEffect(() => {
@@ -15,7 +17,7 @@ const Header = ({ uid }: any) => {
     }, [showSaved]);
 
     const copyToClipboard = useCallback(() => {
-        const someData = process.env.REACT_APP_URL + uid;
+        const someData = url;
 
         let tempInput = document.createElement('input')
         tempInput.value = someData;
@@ -50,9 +52,9 @@ const Header = ({ uid }: any) => {
 
                         <div className="mt-4">
                             <div className="bg-white p-2 flex flex-col items-center rounded">
-                                <img className="w-32 h-32 mb-4" src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&margin=0&data=${ process.env.REACT_APP_URL }${ uid }`} alt="QR코드" />
+                                <img className="w-32 h-32 mb-4" src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&margin=0&data=${ url }`} alt="QR코드" />
 
-                                <a className="text-sm text-zinc-900" href={`${ process.env.REACT_APP_URL }${ uid }`}>{ process.env.REACT_APP_URL }{ uid }</a>
+                                <a className="text-sm text-zinc-900" href={url}>{url}</a>
                                 <Button className="text-zinc-900 px-1 py-1 mt-1 text-xs" onClick={ copyToClipboard }>클립보드에 복사</Button>
                             </div>
                         </div>

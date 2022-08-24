@@ -14,7 +14,10 @@ const authStorage = {
     },
 
     set(data : any) {
-        localStorage.setItem(key, JSON.stringify(data));
+        localStorage.setItem(key, JSON.stringify({
+            uid: data.uid,
+            token: data.token
+        }));
     },
 
     clear() { 
