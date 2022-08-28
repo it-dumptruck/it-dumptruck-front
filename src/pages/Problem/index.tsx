@@ -172,7 +172,7 @@ const ProblemPage = () => {
                 </div>
             </div>
             }
-
+            <Ad  className="mt-2" />
             <article className="whitespace-pre-line tracking-tight leading-6 mt-4 mb-8" style={{ wordSpacing: '2px' }}>
                 {
                     data ? (korean ? data.question : data?.question_en)
@@ -189,7 +189,6 @@ const ProblemPage = () => {
                     })
                 }
             </div>
-
             <div className="flex mt-8 justify-between">
                 <Button className="px-8 sm:px-16 py-4" onClick={ movePrev } onKeyDown={ onKeyDown } disabled={ data?.prev_id == null }>이전</Button>
                 <Button className="px-8 sm:px-16 py-4" onClick={toggleAnswer} onKeyDown={ onKeyDown }>정답보기</Button>
