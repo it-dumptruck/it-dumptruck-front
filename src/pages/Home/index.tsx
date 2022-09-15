@@ -5,6 +5,7 @@ import { useMatch, useNavigate, useParams, useRoutes } from 'react-router-dom';
 import { isIfStatement } from 'typescript';
 import client, { getAuth, getDumpsLists, setToken, setUid } from '../../api';
 import { IDump } from '../../api/types';
+import Ad from '../../components/Ad';
 import DumpList from '../../components/DumpList';
 import Loading from '../../components/Loading';
 import { useAuthState } from '../../contexts/AuthContext';
@@ -41,10 +42,12 @@ const HomePage = () => {
     return (
         <DefaultTemplate>
             <h2 className="sr-only">덤프 목록</h2>
+            <Ad  className="mt-2" />
             {
                 dumpsLoading ? <Loading title="덤프 목록을 불러오는 중.." /> :
                 isSuccess ? <DumpList dumps={ dumps } /> : <Loading title="덤프 목록을 불러올 수 없습니다. 다시 시도해주세요." />
             }
+            <Ad  className="mt-2" />
         </DefaultTemplate>
     );
 };

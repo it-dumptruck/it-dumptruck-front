@@ -43,6 +43,7 @@ const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
                     <LastUpdated timestamp={ data?.dump.lastUpdated } />
 
                     <hr className="my-8" />
+                    <Ad  className="mt-2" />
 
                     <div>
                         {
@@ -65,6 +66,8 @@ const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
                             문제에 마킹(☆)을 하면 해당 문제들을 모아 볼 수 있습니다.
                         </div>
                     }
+                    
+                    <Ad  className="mt-2" />
                 </>
             }
 

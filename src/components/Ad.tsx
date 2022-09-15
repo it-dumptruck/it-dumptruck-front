@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react';
+import {Adsense} from '@ctrl/react-adsense';
 
 export default ({ className }: { className?: string }) => {
-    useEffect(() => {
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    }, [])
-
     return (
-        <div className={ className }>
-            <ins className="block adsbygoogle"
-                data-ad-client="ca-pub-0228887846519889"
-                data-ad-slot="3445887737"
-                data-ad-format="auto"
-                data-full-width-responsive="true"></ins>
+        <div className={className}>
+            <Adsense
+                style={{ display: 'block' }}
+                client='ca-pub-0228887846519889'
+                slot='3445887737'
+                format='auto'
+                responsive='true'
+            />
         </div>
     );
 };
