@@ -3,7 +3,7 @@ import {Adsense} from '@ctrl/react-adsense';
 
 export default ({ className }: { className?: string }) => {
     return (
-        <div className={className}>
+        <div className={ className ? className : 'my-2' }>
             <Adsense
                 style={{ display: 'block' }}
                 client='ca-pub-0228887846519889'

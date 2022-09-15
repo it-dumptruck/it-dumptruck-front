@@ -42,12 +42,12 @@ const HomePage = () => {
     return (
         <DefaultTemplate>
             <h2 className="sr-only">덤프 목록</h2>
-            <Ad  className="mt-2" />
+            <Ad />
             {
                 dumpsLoading ? <Loading title="덤프 목록을 불러오는 중.." /> :
                 isSuccess ? <DumpList dumps={ dumps } /> : <Loading title="덤프 목록을 불러올 수 없습니다. 다시 시도해주세요." />
             }
-            <Ad  className="mt-2" />
+            <Ad />
         </DefaultTemplate>
     );
 };

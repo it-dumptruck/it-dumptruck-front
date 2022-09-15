@@ -188,7 +188,7 @@ const ProblemPage = () => {
                     })
                 }
             </div>
-            <Ad  className="mt-2" />
+            <Ad />
             <div className="flex mt-8 justify-between">
                 <Button className="px-8 sm:px-16 py-4" onClick={ movePrev } onKeyDown={ onKeyDown } disabled={ data?.prev_id == null }>이전</Button>
                 <Button className="px-8 sm:px-16 py-4" onClick={toggleAnswer} onKeyDown={ onKeyDown }>정답보기</Button>

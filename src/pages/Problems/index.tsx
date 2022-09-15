@@ -43,7 +43,7 @@ const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
                     <LastUpdated timestamp={ data?.dump.lastUpdated } />
 
                     <hr className="my-8" />
-                    <Ad  className="mt-2" />
+                    <Ad />
 
                     <div>
                         {
@@ -67,7 +67,7 @@ const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
                         </div>
                     }
                     
-                    <Ad  className="mt-2" />
+                    <Ad />
                 </>
             }
 
