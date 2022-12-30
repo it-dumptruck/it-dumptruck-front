@@ -141,7 +141,6 @@ const ProblemPage = () => {
         navigate(`/dumps/${dumpId}`)
     }, []);
 
-
     return (
         <DefaultTemplate>
             <label className="sr-only" htmlFor="keyboardControlDescription">방향키를 이용해 문제간 이동이 가능합니다. 위쪽 방향키를 눌러 정답 확인이 가능합니다.</label>
