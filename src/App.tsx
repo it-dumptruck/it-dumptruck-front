@@ -14,27 +14,29 @@ const queryClient = new QueryClient();
 
 const App: React.FC = () => {
     return (
-        <DefaultTemplate>
             <AuthProvider>
                 <ProblemContextProvider>
-                    <QueryClientProvider client={queryClient}>
-                        <BrowserRouter>
-                        <Routes>
-                            <Route path="/" element={<HomePage />} />
-                                <Route path="/dumps">
-                                    <Route path=":dumpId" element={<ProblemsPage />} />
-                                    <Route path=":dumpId/marked" element={<ProblemsPage markedOnly />} />
-                                    <Route path=":dumpId/:questionId" element={<ProblemPage />} />
-                                </Route>
-                                <Route path="/:uid" element={<HomePage/>} />
-                                <Route path="/errors/:statusCode" element={<ErrorPage/>} />
-                                <Route path="*" element={<Navigate to="/" />} />
-                            </Routes>
-                        </BrowserRouter>
+                <QueryClientProvider client={queryClient}>
+                    <BrowserRouter>
+                        <DefaultTemplate>
+                                <Routes>
+                                <Route path="/" element={<HomePage />} />
+                                    <Route path="/dumps">
+                                        <Route path=":dumpId" element={<ProblemsPage />} />
+                                        <Route path=":dumpId/marked" element={<ProblemsPage markedOnly />} />
+                                        <Route path=":dumpId/:questionId" element={<ProblemPage />} />
+                                    </Route>
+                                    <Route path="/:uid" element={<HomePage/>} />
+                                    <Route path="/errors/:statusCode" element={<ErrorPage/>} />
+                                    <Route path="*" element={<Navigate to="/" />} />
+                                </Routes>
+                            </DefaultTemplate>
+
+                            </BrowserRouter>
                     </QueryClientProvider>
                 </ProblemContextProvider>
             </AuthProvider>
-        </DefaultTemplate>
+
     );
 };
 
