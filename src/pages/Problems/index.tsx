@@ -33,7 +33,7 @@ const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
     }
 
     return (
-        <DefaultTemplate>
+        <>
             <h2 className="sr-only">문제 리스트 페이지</h2>
 
             {
@@ -68,7 +68,7 @@ const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
                 </>
             }
 
-        </DefaultTemplate>
+        </>
     )
 };
 

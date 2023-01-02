@@ -11,7 +11,7 @@ const ErrorPage = () => {
     if (statusCode == 404) message = '페이지를 찾을 수 없습니다.'
 
     return (
-        <DefaultTemplate>
+        <>
             <h2 className="sr-only">오류 페이지</h2>
 
             <div className="flex flex-col items-center">
@@ -24,7 +24,7 @@ const ErrorPage = () => {
                     error code : { statusCode }
                 </div>
             </div>
-        </DefaultTemplate>
+        </>
     );
 };
 
