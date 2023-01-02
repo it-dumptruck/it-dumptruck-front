@@ -36,4 +36,4 @@ const DumpList: React.FC<DumpListProps> = ({ dumps }) => {
     );
 };
 
-export default DumpList;
+export default React.memo(DumpList);

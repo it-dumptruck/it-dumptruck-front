@@ -15,12 +15,8 @@ import DefaultTemplate from '../../templates/DefaultTemplate';
 
 const HomePage = () => {
 
-    const { data: dumps,isLoading, isSuccess, isError, refetch} = useDumps();
-    useEffect(() => {
-        if (isError) {
-            refetch();
-        }
-    }, [isError,refetch]);
+    const { data: dumps,isLoading, isSuccess} = useDumps();
+    
     return (
         <>
             <h2 className="sr-only">덤프 목록</h2>
@@ -29,7 +25,6 @@ const HomePage = () => {
                 isSuccess ? <DumpList dumps={ dumps } /> : <Loading title="덤프 목록을 불러올 수 없습니다. 다시 시도해주세요." />
             }
         </>
-       
     );
 };
 

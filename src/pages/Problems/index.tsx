@@ -5,7 +5,6 @@ import LastUpdated from '../../components/lastUpdated';
 import ShortenQuestion from '../../components/ShortenQuestion';
 import { useAuthState } from '../../contexts/AuthContext';
 import { useAuth } from '../../hooks/useAuth';
-import DefaultTemplate from '../../templates/DefaultTemplate';
 import { Problems, ShortProblem } from '../../api/types';
 import { getMarkedProblems, getProblems } from '../../api';
 import Loading from '../../components/Loading';
