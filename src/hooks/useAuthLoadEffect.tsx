@@ -4,16 +4,14 @@ import authStorage from "../storages/authStorage";
 import { useAuth } from "./useAuth";
 
 export default function useAuthLoadEffect() {
-    const { mutate } = useAuth();
+    const { mutateAsync } = useAuth();
     useEffect(() => {
         const func = async () => {
-            const auth = authStorage.get()
-            console.log(auth);
+            const auth = await authStorage.get();
             if (!auth) {
-                await mutate();
+                await mutateAsync();
             }
         }
         func();
-    }, [mutate])
-    
+    }, [mutateAsync]);
 }
