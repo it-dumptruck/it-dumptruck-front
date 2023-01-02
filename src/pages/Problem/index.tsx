@@ -34,17 +34,7 @@ const ProblemPage = () => {
     const navigate = useNavigate();
     const keyboardControllerRef = useRef<HTMLInputElement>(null) as any;
     const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problem>(
-        ['question', dumpId, questionId, type], () => getProblem(dumpId, questionId, type), {
-            enabled: !!auth, cacheTime: 0, retry: 1,
-            onError: async (error: any) => {
-                if (error.response.status === 401) {
-                    await authMutate();
-                    refetch();
-                } else {
-                    navigate(`/errors/${error.response.status}`);
-                }
-            }
-    });
+        ['question', dumpId, questionId, type], () => getProblem(dumpId, questionId, type));
 
     const { data:markData, mutate, mutateAsync, isLoading:markIsLoading } = useMutation(setMarkProblem, {
         onError: async (error: any) => {
