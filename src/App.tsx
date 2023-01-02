@@ -8,6 +8,7 @@ import ProblemPage from './pages/Problem';
 import ProblemsPage from './pages/Problems';
 import ErrorPage from './pages/Error';
 import DefaultTemplate from './templates/DefaultTemplate';
+import AuthComponent from './components/Auth';
 
 
 const queryClient = new QueryClient();
@@ -19,6 +20,7 @@ const App: React.FC = () => {
                 <QueryClientProvider client={queryClient}>
                     <BrowserRouter>
                         <DefaultTemplate>
+                            <AuthComponent>
                                 <Routes>
                                 <Route path="/" element={<HomePage />} />
                                     <Route path="/dumps">
@@ -30,13 +32,12 @@ const App: React.FC = () => {
                                     <Route path="/errors/:statusCode" element={<ErrorPage/>} />
                                     <Route path="*" element={<Navigate to="/" />} />
                                 </Routes>
+                                </AuthComponent>
                             </DefaultTemplate>
-
                             </BrowserRouter>
                     </QueryClientProvider>
                 </ProblemContextProvider>
             </AuthProvider>
-
     );
 };
 
