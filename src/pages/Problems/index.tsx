@@ -1,36 +1,18 @@
 import React, { useEffect } from 'react';
-import { useQuery } from 'react-query';
-import { useNavigate, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import LastUpdated from '../../components/lastUpdated';
 import ShortenQuestion from '../../components/ShortenQuestion';
-import { useAuthState } from '../../contexts/AuthContext';
-import { useAuth } from '../../hooks/useAuth';
-import { Problems, ShortProblem } from '../../api/types';
-import { getMarkedProblems, getProblems } from '../../api';
+import {  ShortProblem } from '../../api/types';
 import Loading from '../../components/Loading';
-import Ad from '../../components/Ad';
+import useQuestions from '../../hooks/useQuestions';
+
 
 const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
     const { dumpId }: { dumpId: string } = useParams() as any;
-    const navigate = useNavigate();
 
-    const [auth, setAuth] = useAuthState();
-    const { mutate: authMutate, isLoading: isAuthLoading } = useAuth();
-    const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problems>(['questionList', dumpId, markedOnly], () => getProblemsWrapFn(dumpId), {
-        enabled: !!auth, cacheTime: 0, retry: 1,
-        onError: async (error: any) => {
-            if (error.response.status === 401) {
-                await authMutate();
-                refetch();
-            } else {
-                navigate(`/errors/${error.response.status}`);
-            }
-        }})
+    const { data, isLoading } = useQuestions({markedOnly : !!markedOnly , dumpId});
     
-    const getProblemsWrapFn = (dumpId: any) => {
-        return markedOnly ? getMarkedProblems(dumpId) : getProblems(dumpId);
-    }
-
+    
     return (
         <>
             <h2 className="sr-only">문제 리스트 페이지</h2>
