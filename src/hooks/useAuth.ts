@@ -6,12 +6,13 @@ export const useAuth = () => {
     const [ ,setAuth] = useAuthState();
     return useMutation(getAuth, {
         onError: (e) => {
+            console.log("autherror")
             throw new Error("AUTH ERROR")
         },
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
             setAuth(data);
             setToken(data);
-            authStorage.set(data);
+            await authStorage.set(data);
         },
     });
 }

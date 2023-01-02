@@ -2,7 +2,6 @@ import React from 'react';
 import { FaRegStar, FaStar } from 'react-icons/fa';
 
 export default ({ checked }: { checked?: boolean }) => {
-    
     return (
         <>
             {

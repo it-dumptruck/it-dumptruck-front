@@ -9,9 +9,7 @@ import useQuestions from '../../hooks/useQuestions';
 
 const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
     const { dumpId }: { dumpId: string } = useParams() as any;
-
     const { data, isLoading } = useQuestions({markedOnly : !!markedOnly , dumpId});
-    
     
     return (
         <>
@@ -48,7 +46,6 @@ const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
                     }
                 </>
             }
-
         </>
     )
 };

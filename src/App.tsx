@@ -11,7 +11,9 @@ import DefaultTemplate from './templates/DefaultTemplate';
 import AuthComponent from './components/Auth';
 
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    
+});
 
 const App: React.FC = () => {
     return (
@@ -22,7 +24,7 @@ const App: React.FC = () => {
                         <DefaultTemplate>
                             <AuthComponent>
                                 <Routes>
-                                <Route path="/" element={<HomePage />} />
+                                    <Route path="/" element={<HomePage />} />
                                     <Route path="/dumps">
                                         <Route path=":dumpId" element={<ProblemsPage />} />
                                         <Route path=":dumpId/marked" element={<ProblemsPage markedOnly />} />
@@ -32,7 +34,7 @@ const App: React.FC = () => {
                                     <Route path="/errors/:statusCode" element={<ErrorPage/>} />
                                     <Route path="*" element={<Navigate to="/" />} />
                                 </Routes>
-                                </AuthComponent>
+                            </AuthComponent>
                             </DefaultTemplate>
                             </BrowserRouter>
                     </QueryClientProvider>
