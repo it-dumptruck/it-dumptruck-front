@@ -9,7 +9,7 @@ export default function useAuthLoadEffect() {
     useEffect(() => {
         if (authState) return;
         const func = async () => {
-            const auth = await authStorage.get();
+            const auth = authStorage.get();
             if (!auth) {
                 await mutateAsync();
             }

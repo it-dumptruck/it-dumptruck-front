@@ -6,16 +6,15 @@ const client = axios.create({
     baseURL: process.env.REACT_APP_API,
 });
 
-
 export function setToken({ token, uid }: Auth) {
     if (!token || !uid) return;
     client.defaults.headers.common['token'] = token;
     client.defaults.headers.common['uid'] = uid;
 }
 
-export function setUid(uid:string) { 
-    client.defaults.headers.common['uid'] = uid;
-}
+// export function setUid(uid:string) { 
+//     client.defaults.headers.common['uid'] = uid;
+// }
 
 export function clearToken() {
     client.defaults.headers.common['token'] = '';
@@ -62,5 +61,22 @@ export async function setMarkProblem({ dumpId, questionId, mark }: any) {
     });
     return data;
 }
+
+// client.interceptors.response.use(
+//     (data) => {
+//         return data;
+//     },
+//     async (error) => {
+//         console.log(error.response.status)
+//         if (error.response.status === 401) {
+//             const { data } = await getAuth();
+//             client.defaults.headers.common['token'] = data.token;
+//             client.defaults.headers.common['uid'] = data.uid;
+//             return;
+//         }
+//         return error;
+        
+//     }
+// )
 
 export default client;
