@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { getMarkedProblems, getProblems } from "../api";
 import { Problems } from "../api/types";
@@ -30,5 +30,7 @@ export default function useQuestions({ markedOnly, dumpId }: { markedOnly: boole
             
         }
     });
+
+    // const mutate = useMutation();
     return data;
 }

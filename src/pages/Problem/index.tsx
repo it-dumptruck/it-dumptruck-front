@@ -6,14 +6,13 @@ import { getAuth, getProblem, getProblems, setMarkProblem } from '../../api';
 import { Problem } from '../../api/types';
 import { useProblemState } from '../../contexts/ProblemContext';
 
-import DefaultTemplate from '../../templates/DefaultTemplate';
 import Button from '../../components/Button';
 import AnswerButton from '../../components/AnswerButton';
-import { useAuth } from '../../hooks/useAuth';
-import { useAuthState } from '../../contexts/AuthContext';
 import Loading from '../../components/Loading';
 import Star from '../../components/Star';
 import Ad from '../../components/Ad';
+import useToggleMark from '../../hooks/useToggleMark';
+import useProblem from '../../hooks/useProblem';
 
 enum TYPE { 
     SEQUENCE = 'sequence',
@@ -22,9 +21,7 @@ enum TYPE {
 }
 
 const ProblemPage = () => {
-    const [auth,] = useAuthState();
     const state = useLocation().state as { initialType: string };
-    const { mutateAsync: authMutate, isLoading: isAuthLoading } = useAuth();
     const { dumpId, questionId }: { dumpId: string, questionId: string } = useParams() as any;
     const [korean, setKorean] = useState<boolean>(true);
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
@@ -33,19 +30,11 @@ const ProblemPage = () => {
     const [mark, setMark] = useState<boolean>(false);
     const navigate = useNavigate();
     const keyboardControllerRef = useRef<HTMLInputElement>(null) as any;
-    const { data, isLoading, refetch, isError, isSuccess } = useQuery<Problem>(
-        ['question', dumpId, questionId, type], () => getProblem(dumpId, questionId, type));
+    const { data, isLoading, refetch, isError, isSuccess } = useProblem({ dumpId,
+        questionId,
+        type,});
 
-    const { data:markData, mutate, mutateAsync, isLoading:markIsLoading } = useMutation(setMarkProblem, {
-        onError: async (error: any) => {
-            if (error.response.status === 401) {
-                await authMutate();
-                toggleMark()
-            } else {
-                navigate(`/errors/${error.response.status}`);
-            }
-        }
-    });
+    const { data:markData, mutate, mutateAsync, isLoading:markIsLoading } = useToggleMark();
 
     useEffect(() => {
         keyboardControllerRef.current.focus();
@@ -145,7 +134,7 @@ const ProblemPage = () => {
                         <option value={`${TYPE.SEQUENCE}`}>차례로 풀기</option>
                         <option value={`${TYPE.RANDOM}`}>무작위로 풀기</option>
                         {
-                            mark ? <option value={`${TYPE.MARKED}`}>마킹된 문제 풀기</option> : ''
+                            mark && <option value={`${TYPE.MARKED}`}>마킹된 문제 풀기</option> 
                         }
                     </select>
 
