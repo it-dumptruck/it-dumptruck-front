@@ -13,6 +13,7 @@ import Star from '../../components/Star';
 import Ad from '../../components/Ad';
 import useToggleMark from '../../hooks/useToggleMark';
 import useProblem from '../../hooks/useProblem';
+import StarToggleButton from '../../components/StartToggleButton';
 
 enum TYPE { 
     SEQUENCE = 'sequence',
@@ -33,9 +34,9 @@ const ProblemPage = () => {
     const { data, isLoading, refetch, isError, isSuccess } = useProblem({ dumpId,
         questionId,
         type,});
-
+    
     const { data:markData, mutate, mutateAsync, isLoading:markIsLoading } = useToggleMark();
-
+        console.log(data);
     useEffect(() => {
         keyboardControllerRef.current.focus();
         setKorean(true);
@@ -142,9 +143,10 @@ const ProblemPage = () => {
                 </div>
 
                 <div className="flex items-center mt-4 sm:mt-0">
-                    <button role="button" aria-label="마킹하기/마킹해제" onClick={toggleMark} disabled={markIsLoading}>
+                    {/* <button role="button" aria-label="마킹하기/마킹해제" onClick={toggleMark} disabled={markIsLoading}>
                         <Star checked={mark} />
-                    </button>
+                    </button> */}
+                    <StarToggleButton questionId={+questionId} dumpId={dumpId} />
                     <h3 className="text-3xl font-extrabold mr-4">Q{ data?.id }</h3>
                     <Button className="py-2" onClick={changeLanguage} onKeyDown={ onKeyDown }>{korean ? '원문보기' : '한글보기'}</Button>
                 </div>

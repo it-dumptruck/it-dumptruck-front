@@ -11,7 +11,7 @@ const DumpList: React.FC<DumpListProps> = ({ dumps }) => {
     return (
         <div>
             {
-                dumps.map((item: IDump) => {
+                dumps?.map((item: IDump) => {
                     return (
                     <div className="mt-10 first:mt-0" aria-labelledby={"dumpgroup-" + item.groupName.toLowerCase()}>
                         <h3 className="text-2xl font-bold" id={"dumpgroup-" + item.groupName.toLowerCase()}>{item.groupName}</h3>
@@ -36,4 +36,4 @@ const DumpList: React.FC<DumpListProps> = ({ dumps }) => {
     );
 };
 
-export default React.memo(DumpList);
+export default DumpList;

@@ -14,7 +14,7 @@ export default function useQuestions({ markedOnly, dumpId }: { markedOnly: boole
     const { mutateAsync } = useAuth();
     const navigate = useNavigate();
     const [auth] = useAuthState();
-    const data =  useQuery<Problems>(['questionList', dumpId, markedOnly], () => getProblemsWrapFn(markedOnly, dumpId), {
+    const data =  useQuery<Problems>(['questionList', dumpId], () => getProblemsWrapFn(markedOnly, dumpId), {
         enabled: !!auth,
         retry: 0,
         staleTime: staletime,

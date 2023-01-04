@@ -27,11 +27,12 @@ export type Problem = {
     description: string;
     marked: boolean;
     user_answer?: string[];
+    questionID: number;
 }
 
 export type ShortProblem = {
     id: number;
-    questionID: string;
+    questionID: number;
     question: string;
     marked: boolean;
 }

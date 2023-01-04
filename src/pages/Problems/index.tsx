@@ -29,7 +29,7 @@ const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
                                 return <ShortenQuestion
                                     dumpId={data?.dump.dumpID}
                                     question={dump.question}
-                                    questionId={dump.questionID}
+                                    questionId={+dump.questionID}
                                     marked={dump.marked}
                                     markedOnly={markedOnly}
                                 />

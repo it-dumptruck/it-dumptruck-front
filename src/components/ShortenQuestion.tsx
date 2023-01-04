@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Star from './Star';
 
-export default ({ dumpId, questionId, question, marked, markedOnly }: { dumpId: string, questionId: string, question: string, marked: boolean, markedOnly?: boolean }) => {
+export default ({ dumpId, questionId, question, marked, markedOnly }: { dumpId: string, questionId: number, question: string, marked: boolean, markedOnly?: boolean }) => {
     const navigate = useNavigate();
 
     const moveToQuestionPage = useCallback(() => {
