@@ -59,7 +59,6 @@ const ProblemPage = () => {
     
     const toggleMark = useCallback(() => {
         if (markIsLoading) return;
-
         setMark(!mark)
         setType('sequence');
         mutate({
@@ -67,11 +66,12 @@ const ProblemPage = () => {
             questionId,
             mark: !mark
         });
+        
     }, [mark, dumpId, questionId, type, markIsLoading]);
 
-    useEffect(() => {
-        refetch();
-    }, [type]);
+    // useEffect(() => {
+    //     refetch();
+    // }, [type]);
 
     useEffect(() => {
         if (markData !== undefined) setMark(markData.marked)
@@ -79,7 +79,7 @@ const ProblemPage = () => {
     
     const changeType = useCallback((e: any) => {
         setType(e.target.value);
-        refetch();
+        // refetch();
     }, [type, refetch]);
     
     const onPressList = useCallback((key: any) => {
@@ -146,7 +146,7 @@ const ProblemPage = () => {
                     {/* <button role="button" aria-label="마킹하기/마킹해제" onClick={toggleMark} disabled={markIsLoading}>
                         <Star checked={mark} />
                     </button> */}
-                    <StarToggleButton questionId={+questionId} dumpId={dumpId} />
+                            <StarToggleButton questionId={+questionId} dumpId={dumpId} type={type} />
                     <h3 className="text-3xl font-extrabold mr-4">Q{ data?.id }</h3>
                     <Button className="py-2" onClick={changeLanguage} onKeyDown={ onKeyDown }>{korean ? '원문보기' : '한글보기'}</Button>
                 </div>
