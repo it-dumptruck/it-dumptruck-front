@@ -11,9 +11,7 @@ import DefaultTemplate from './templates/DefaultTemplate';
 import AuthComponent from './components/Auth';
 
 
-const queryClient = new QueryClient({
-    
-});
+const queryClient = new QueryClient({});
 
 const App: React.FC = () => {
     return (

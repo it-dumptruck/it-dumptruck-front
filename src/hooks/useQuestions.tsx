@@ -30,7 +30,5 @@ export default function useQuestions({ markedOnly, dumpId }: { markedOnly: boole
             
         }
     });
-
-    // const mutate = useMutation();
     return data;
 }

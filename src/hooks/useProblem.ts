@@ -15,6 +15,7 @@ export default function useProblem({
     const { mutateAsync } = useAuth();
     const data = useQuery<Problem>(
         ['question', dumpId, questionId], () => getProblem(dumpId, questionId, type), {
+            suspense:true,
             enabled: !!auth,
             retry: 0,
             staleTime: staletime,
