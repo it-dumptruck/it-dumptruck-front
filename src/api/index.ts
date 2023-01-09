@@ -28,7 +28,7 @@ export async function getAuth(){
 }
 
 
-export async function getProblem(dumpId: string, questionToken: string, type: string):Promise<Problem> {
+export async function getProblem(dumpId: string, questionToken: number, type: string):Promise<Problem> {
     const { data } = await client.get(`/dumps/${dumpId}/${questionToken}`, {
         headers: {
             type

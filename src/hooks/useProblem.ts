@@ -10,11 +10,11 @@ export default function useProblem({
     dumpId,
     questionId,
     type,
-}: any) {
+}: { dumpId: string, questionId: number, type: string }) {
     const [auth] = useAuthState();
     const { mutateAsync } = useAuth();
     const data = useQuery<Problem>(
-        ['question', dumpId, questionId], () => getProblem(dumpId, questionId, type), {
+        ['question', dumpId, +questionId], () => getProblem(dumpId, questionId, type), {
             suspense:true,
             enabled: !!auth,
             retry: 0,

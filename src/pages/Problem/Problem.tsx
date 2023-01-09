@@ -10,6 +10,7 @@ import Ad from '../../components/Ad';
 import useToggleMark from '../../hooks/useToggleMark';
 import useProblem from '../../hooks/useProblem';
 import StarToggleButton from '../../components/StartToggleButton';
+import TestComponent from '../../components/TestComponent';
 
 enum TYPE { 
     SEQUENCE = 'sequence',
@@ -19,20 +20,18 @@ enum TYPE {
 
 const Problem = () => {
     const state = useLocation().state as { initialType: string };
-    const { dumpId, questionId }: { dumpId: string, questionId: string } = useParams() as any;
+    const { dumpId, questionId }: { dumpId: string, questionId: number } = useParams() as any;
     const [korean, setKorean] = useState<boolean>(true);
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
     const [type, setType] = useState<string>('sequence');
     const [pressed, setPressed] = useState<string[] | null>(null);
     const navigate = useNavigate();
     const keyboardControllerRef = useRef<HTMLInputElement>(null) as any;
-    const { data } = useProblem({ dumpId,
-        questionId,
+    const { data, isFetching, isLoading } = useProblem({ dumpId,
+        questionId: +questionId,
         type,
     });
-    
-    const {  isLoading:markIsLoading,isSuccess } = useToggleMark();
-    useEffect(() => {console.log(data) },[data])
+
     useEffect(() => {
         keyboardControllerRef.current.focus();
         setKorean(true);
@@ -40,6 +39,8 @@ const Problem = () => {
         setPressed(null);
     }, [data])
 
+
+    
     useEffect(() => {
         if (state?.initialType) setType(state.initialType)
     }, [state]);
@@ -97,11 +98,7 @@ const Problem = () => {
     const moveToQuestionList = useCallback(() => {
         navigate(`/dumps/${dumpId}`)
     }, []);
-    useEffect(() => {
-        console.log("mark " ,markIsLoading);
-        console.log("success  " ,isSuccess);
-
-    },[markIsLoading, isSuccess])
+   
     return (
         <>
             <label className="sr-only" htmlFor="keyboardControlDescription">방향키를 이용해 문제간 이동이 가능합니다. 위쪽 방향키를 눌러 정답 확인이 가능합니다.</label>
@@ -117,12 +114,10 @@ const Problem = () => {
                             !!data?.marked && <option value={`${TYPE.MARKED}`}>마킹된 문제 풀기</option>
                         }
                     </select>
-                    {!!data?.marked && <Button className="py-2 ml-2" onClick={ moveToQuestionList }>목록 보기</Button>}
                     <Button className="py-2 ml-2" onClick={ moveToQuestionList }>목록 보기</Button>
                 </div>
 
                 <div className="flex items-center mt-4 sm:mt-0">
-                 
                     <StarToggleButton questionId={+questionId} dumpId={dumpId} type={type} />
                     <h3 className="text-3xl font-extrabold mr-4">Q{ data?.id }</h3>
                     <Button className="py-2" onClick={changeLanguage} onKeyDown={ onKeyDown }>{korean ? '원문보기' : '한글보기'}</Button>
@@ -146,9 +141,9 @@ const Problem = () => {
                 }
             </div>
             <div className="flex mt-8 justify-between">
-                <Button className={`px-8 sm:px-16 py-4 `} onClick={movePrev} onKeyDown={onKeyDown} disabled={data?.prev_id == null || markIsLoading}>{ data?.prev_id == null || markIsLoading ? "loading.." : "이전"}</Button>
+                <Button className={`px-8 sm:px-16 py-4 `} onClick={movePrev} onKeyDown={onKeyDown} disabled={data?.prev_id == null}>이전</Button>
                 <Button className="px-8 sm:px-16 py-4" onClick={toggleAnswer} onKeyDown={ onKeyDown }>정답보기</Button>
-                <Button className="px-8 sm:px-16 py-4" onClick={ moveNext } onKeyDown={ onKeyDown } disabled={ data?.next_id == null || markIsLoading}>{ data?.prev_id == null || markIsLoading ? "loading.." : "다음"}</Button>
+                <Button className="px-8 sm:px-16 py-4" onClick={ moveNext } onKeyDown={ onKeyDown } disabled={ data?.next_id == null}>다음</Button>
             </div>
 
             <Ad className="mt-2" />

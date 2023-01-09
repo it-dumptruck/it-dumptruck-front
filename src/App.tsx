@@ -9,7 +9,7 @@ import ProblemsPage from './pages/Problems';
 import ErrorPage from './pages/Error';
 import DefaultTemplate from './templates/DefaultTemplate';
 import AuthComponent from './components/Auth';
-
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 const queryClient = new QueryClient({});
 
@@ -34,7 +34,8 @@ const App: React.FC = () => {
                                 </Routes>
                             </AuthComponent>
                             </DefaultTemplate>
-                            </BrowserRouter>
+                    </BrowserRouter>
+                    <ReactQueryDevtools initialIsOpen={false} position='bottom-right'/>
                     </QueryClientProvider>
                 </ProblemContextProvider>
             </AuthProvider>

@@ -27,7 +27,7 @@ export type Problem = {
     description: string;
     marked: boolean;
     user_answer?: string[];
-    questionID: number;
+    questionId: number;
 }
 
 export type ShortProblem = {

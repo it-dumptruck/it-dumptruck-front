@@ -9,6 +9,7 @@ import Star from './Star';
 
 const StarToggleButton = ({ dumpId, questionId, type }: { dumpId: string, questionId: number, type: string }) => {
     // const data = useQueryClient().getQueryData<Problem>(['question', dumpId, questionId])
+    
     const { data } = useProblem({dumpId, questionId, type});
     const { mutate } = useToggleMark();
     
@@ -26,8 +27,6 @@ const StarToggleButton = ({ dumpId, questionId, type }: { dumpId: string, questi
             </button>
             {data?.marked ? <FaStar className="text-2xl mr-2 text-yellow-400" />
                 : <FaRegStar className="text-2xl mr-2 text-zinc-300" />}
-            
-            
         </>
     );
 } 
