@@ -11,6 +11,7 @@ import useToggleMark from '../../hooks/useToggleMark';
 import useProblem from '../../hooks/useProblem';
 import StarToggleButton from '../../components/StartToggleButton';
 import TestComponent from '../../components/TestComponent';
+import useData from '../../hooks/useData';
 
 enum TYPE { 
     SEQUENCE = 'sequence',
@@ -27,10 +28,11 @@ const Problem = () => {
     const [pressed, setPressed] = useState<string[] | null>(null);
     const navigate = useNavigate();
     const keyboardControllerRef = useRef<HTMLInputElement>(null) as any;
-    const { data, isFetching, isLoading } = useProblem({ dumpId,
-        questionId: +questionId,
-        type,
-    });
+   
+    const {data, isFetching } = useData({ dumpId, questionId, type });
+    useEffect(() => {
+        console.log("probvlem : " ,isFetching);
+    },[isFetching])
 
     useEffect(() => {
         keyboardControllerRef.current.focus();
@@ -38,8 +40,7 @@ const Problem = () => {
         setShowAnswer(false);
         setPressed(null);
     }, [data])
-
-
+    
     
     useEffect(() => {
         if (state?.initialType) setType(state.initialType)
@@ -141,8 +142,10 @@ const Problem = () => {
                 }
             </div>
             <div className="flex mt-8 justify-between">
-                <Button className={`px-8 sm:px-16 py-4 `} onClick={movePrev} onKeyDown={onKeyDown} disabled={data?.prev_id == null}>이전</Button>
-                <Button className="px-8 sm:px-16 py-4" onClick={toggleAnswer} onKeyDown={ onKeyDown }>정답보기</Button>
+                {/* <Button className={`px-8 sm:px-16 py-4 ${isLoading == null ? "text-rose-700	" : null}`} onClick={movePrev} onKeyDown={onKeyDown} disabled={data?.prev_id == null}>이전</Button> */}
+                <Button className={`px-8 sm:px-16 py-4`} onClick={movePrev} onKeyDown={onKeyDown} disabled={data?.prev_id == null}>이전</Button>
+
+                <Button className="px-8 sm:px-16 py-4" onClick={toggleAnswer} onKeyDown={onKeyDown}>정답보기</Button>
                 <Button className="px-8 sm:px-16 py-4" onClick={ moveNext } onKeyDown={ onKeyDown } disabled={ data?.next_id == null}>다음</Button>
             </div>
 

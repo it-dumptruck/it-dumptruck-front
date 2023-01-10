@@ -9,7 +9,7 @@ export default function useToggleMark() {
     const queryClient = useQueryClient();
     const { mutateAsync } = useAuth();
     const navigate = useNavigate();
-    const mutate = useMutation({
+    return useMutation({
         mutationFn: setMarkProblem,
         onMutate:  (params) => {
             const { dumpId, questionId, mark }: { dumpId: string, questionId: number, mark: boolean }  = params;
@@ -28,10 +28,7 @@ export default function useToggleMark() {
             )
         },
         onSuccess: async (data) => {
-
+            console.log("data ", data)
         }
-        
     });
-
-    return mutate;
 }
