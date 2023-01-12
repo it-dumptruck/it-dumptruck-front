@@ -32,6 +32,12 @@ const Problem = () => {
    
     const {data, isFetching, refetchQuestion } = useData({ dumpId, questionId, type });
     
+    useLayoutEffect(() => {
+        if (data) {
+            refetchQuestion({dumpId, questionToken:questionId, type});
+        }
+    }, [])
+
     // useEffect(() => {
     //     console.log(type);
     //     console.log("state:" ,state);
@@ -45,9 +51,6 @@ const Problem = () => {
         setShowAnswer(false);
         setPressed(null);
     }, [data])
-    
-    
-    
 
     const changeLanguage = useCallback(() => {
         setKorean(!korean)
@@ -81,7 +84,7 @@ const Problem = () => {
         else return;
         
         onPressList(String.fromCharCode(char))
-    }, [data, showAnswer, pressed, dumpId, questionId, type]);
+    }, [data, showAnswer, pressed, dumpId, questionId, type,onPressList]);
 
     const moveToQuestionList = useCallback(() => {
         navigate(`/dumps/${dumpId}`)
@@ -131,7 +134,7 @@ const Problem = () => {
             <div className="flex mt-8 justify-between">
                 <MoveButton dumpId={dumpId}  go={data?.prev_id} isFetching={isFetching} keyNumber={37} >이전</MoveButton>
                 <Button className="px-8 sm:px-16 py-4" onClick={toggleAnswer} onKeyDown={onKeyDown}>정답보기</Button>
-                <MoveButton dumpId={dumpId} go={data?.next_id} isFetching={isFetching} keyNumber={39} >이전</MoveButton>
+                <MoveButton dumpId={dumpId} go={data?.next_id} isFetching={isFetching} keyNumber={39} >다음</MoveButton>
             </div>
             <Ad className="mt-2" />
             <div className="mt-8" role="status">

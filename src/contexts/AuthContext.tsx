@@ -25,10 +25,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         })();
         
     }, [setAuth, setToken]);
-    useEffect(() => {
-        console.log("context auth changed");
-        console.log(auth);
-    }, [auth]);
     return <AuthContext.Provider value={[auth, setAuth]}>{children}</AuthContext.Provider>
 }
 

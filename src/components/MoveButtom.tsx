@@ -14,7 +14,7 @@ const MoveButton = ({dumpId, go,children ,isFetching, keyNumber}: {dumpId: strin
         if (e.keyCode === keyNumber) goNext();
     }, [goNext,keyNumber]);
 
-    return <Button className="px-8 sm:px-16 py-4" onClick={goNext} disabled={ !go || isFetching} onKeyDown={onKeyDown}>{!go ? "loading..." : children}</Button>
+    return <Button className="px-8 sm:px-16 py-4" onClick={goNext} disabled={ !go || isFetching} onKeyDown={onKeyDown}>{children}</Button>
 }
 
 export default MoveButton;

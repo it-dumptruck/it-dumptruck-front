@@ -9,7 +9,7 @@ export default function AuthComponent({children}:any) {
     
     return <>
         {
-            auth ?  <>{children} </> : <Loading title="유저 정보 세팅중.." />
+            auth ?  <>{children} </> : <Loading title="이전 기록 불러오는중.." />
         }
     </>
 }

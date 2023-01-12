@@ -2,14 +2,13 @@ import React, { useEffect, useLayoutEffect } from 'react';
 import {  useParams } from 'react-router-dom';
 import LastUpdated from '../../components/lastUpdated';
 import ShortenQuestion from '../../components/ShortenQuestion';
-import {  ShortProblem } from '../../api/types';
-import Loading from '../../components/Loading';
+
 import useQuestions from '../../hooks/useQuestions';
 
 
-const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
+const ProblemsPage = ({ markedOnly }: { markedOnly: boolean }) => {
     const { dumpId }: { dumpId: string } = useParams() as any;
-    const { data, isLoading, refetch } = useQuestions({markedOnly : !!markedOnly , dumpId});
+    const { data, isLoading ,refetch} = useQuestions({markedOnly : !!markedOnly , dumpId: dumpId});
     useLayoutEffect(() => {
         if (data) {
             refetch({markedOnly: !!markedOnly, dumpId: dumpId});
@@ -28,20 +27,12 @@ const ProblemsPage = ({ markedOnly }: { markedOnly?: boolean }) => {
 
                     <div>
                         {
-                            data?.lists.map((dump: ShortProblem) => {
-                                return <ShortenQuestion
-                                    dumpId={data?.dump.dumpID}
-                                    question={dump.question}
-                                    questionId={+dump.questionID}
-                                    marked={dump.marked}
-                                    markedOnly={markedOnly}
-                                />
-                            })
+                            data?.lists.map((dump: any) => <ShortenQuestion dumpId={data?.dump.dumpID} questionId={+dump.questionID} question={dump.question} marked={dump.marked} markedOnly={markedOnly}/>)
                         }
                     </div>
 
                     {
-                        data?.lists.length == 0 && 
+                        data?.lists.length === 0 && 
                         <div>
                             마킹된 문제가 존재하지 않습니다.<br />
                             문제에 마킹(☆)을 하면 해당 문제들을 모아 볼 수 있습니다.

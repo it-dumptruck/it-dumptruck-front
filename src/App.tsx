@@ -35,8 +35,7 @@ const App: React.FC = () => {
                             </AuthComponent>
                             </DefaultTemplate>
                     </BrowserRouter>
-                    <ReactQueryDevtools initialIsOpen={false} position='bottom-right'/>
-                    </QueryClientProvider>
+                </QueryClientProvider>
                 </ProblemContextProvider>
             </AuthProvider>
     );

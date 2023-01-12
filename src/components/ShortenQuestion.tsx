@@ -2,16 +2,16 @@ import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Star from './Star';
 
-export default ({ dumpId, questionId, question, marked, markedOnly }: { dumpId: string, questionId: number, question: string, marked: boolean, markedOnly?: boolean }) => {
+function ShortenQuestion({ dumpId, questionId, question, marked, markedOnly }: { dumpId: string, questionId: number, question: string, marked: boolean, markedOnly: boolean }) {
     const navigate = useNavigate();
 
-    const moveToQuestionPage = useCallback(() => {
-        navigate(`/dumps/${dumpId}/${questionId}`, {
+    const moveToQuestionPage = useCallback((e:any) => {
+        navigate(`/dumps/${dumpId}/${+questionId}`, {
             state: {
-                initialType: (markedOnly ? 'marked' : 'sequence')
+                initialType: markedOnly ? 'marked' : 'sequence'
             }
         })
-    }, [dumpId, questionId]);
+    }, [dumpId, questionId, markedOnly, navigate]);
 
     return (
         <div className="border shadow py-2 px-4 rounded cursor-pointer hover:shadow-md transition-shadow mt-2 first:mt-0" tabIndex={0} role="button" onClick={ moveToQuestionPage }>
@@ -28,3 +28,4 @@ export default ({ dumpId, questionId, question, marked, markedOnly }: { dumpId: 
         </div>
     );
 };
+export default ShortenQuestion
