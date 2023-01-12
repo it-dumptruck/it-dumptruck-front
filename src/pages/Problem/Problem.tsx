@@ -79,7 +79,7 @@ const Problem = () => {
         // else if (e.keyCode == 192 || e.keyCode == 77) toggleMark();
         if (e.keyCode == 37 && data?.prev_id) navigate(`/dumps/${dumpId}/${data.prev_id}`);
         if (e.keyCode == 39 && data?.next_id) navigate(`/dumps/${dumpId}/${data.next_id}`);
-        if(e.keyCode == 77) startToggle({ dumpId, questionId: +questionId, mark: !data?.marked });
+        if (e.keyCode == 77 || e.keyCode == 192) startToggle({ dumpId, questionId: +questionId, mark: !data?.marked });
         // if(e.keyCode )
         let char;
         if (e.keyCode >= 49 && e.keyCode <= 57) char = e.keyCode + 16;
