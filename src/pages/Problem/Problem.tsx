@@ -30,7 +30,7 @@ const Problem = () => {
     const navigate = useNavigate();
     const keyboardControllerRef = useRef<HTMLInputElement>(null) as any;
    
-    const {data, isFetching, refetchQuestion } = useData({ dumpId, questionId, type });
+    const {data, isFetching, refetchQuestion,startToggle } = useData({ dumpId, questionId, type });
     
     useLayoutEffect(() => {
         if (data) {
@@ -77,7 +77,10 @@ const Problem = () => {
 
         if (e.keyCode == 38) setShowAnswer(!showAnswer);
         // else if (e.keyCode == 192 || e.keyCode == 77) toggleMark();
-
+        if (e.keyCode == 37 && data?.prev_id) navigate(`/dumps/${dumpId}/${data.prev_id}`);
+        if (e.keyCode == 39 && data?.next_id) navigate(`/dumps/${dumpId}/${data.next_id}`);
+        if(e.keyCode == 77) startToggle({ dumpId, questionId: +questionId, mark: !data?.marked });
+        // if(e.keyCode )
         let char;
         if (e.keyCode >= 49 && e.keyCode <= 57) char = e.keyCode + 16;
         else if (e.keyCode >= 65 && e.keyCode <= 90) char = e.keyCode
@@ -132,9 +135,9 @@ const Problem = () => {
                 }
             </div>
             <div className="flex mt-8 justify-between">
-                <MoveButton dumpId={dumpId}  go={data?.prev_id} isFetching={isFetching} keyNumber={37} >이전</MoveButton>
+                <MoveButton dumpId={dumpId}  go={data?.prev_id} isFetching={isFetching} keyDown={onKeyDown} >이전</MoveButton>
                 <Button className="px-8 sm:px-16 py-4" onClick={toggleAnswer} onKeyDown={onKeyDown}>정답보기</Button>
-                <MoveButton dumpId={dumpId} go={data?.next_id} isFetching={isFetching} keyNumber={39} >다음</MoveButton>
+                <MoveButton dumpId={dumpId} go={data?.next_id} isFetching={isFetching} keyDown={onKeyDown} >다음</MoveButton>
             </div>
             <Ad className="mt-2" />
             <div className="mt-8" role="status">

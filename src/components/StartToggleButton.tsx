@@ -7,7 +7,7 @@ import useProblem from '../hooks/useProblem';
 import useToggleMark from '../hooks/useToggleMark';
 import Star from './Star';
 
-const StarToggleButton = ({ dumpId, questionId, type }: { dumpId: string, questionId: number, type: string }) => {
+const StarToggleButton = ({ dumpId, questionId, type }: { dumpId: string, questionId: number, type: string, keyDown?:any }) => {
     const { data, startToggle, isFetching } = useData({ dumpId, questionId, type });
     const toggle = useCallback(() => {
         startToggle({ dumpId, questionId, mark: !data?.marked });

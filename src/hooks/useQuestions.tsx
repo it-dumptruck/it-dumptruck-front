@@ -4,7 +4,6 @@ import { getMarkedProblems, getProblems } from "../api";
 import { Problems } from "../api/types";
 import { useAuthState } from "../contexts/AuthContext";
 import { useAuth } from "./useAuth";
-import useQuestionsAction from "./useQuestionsAction";
 
 const getProblemsWrapFn = ({markedOnly, dumpId}:{ markedOnly: boolean, dumpId: any }) => {
     return markedOnly ? getMarkedProblems(dumpId) : getProblems(dumpId);
