@@ -12,8 +12,9 @@ import useProblem from '../../hooks/useProblem';
 import StarToggleButton from '../../components/StartToggleButton';
 import TestComponent from '../../components/TestComponent';
 import useData from '../../hooks/useData';
+import MoveButton from '../../components/MoveButtom';
 
-enum TYPE { 
+export enum TYPE { 
     SEQUENCE = 'sequence',
     RANDOM = 'random',
     MARKED = 'marked'
@@ -24,15 +25,19 @@ const Problem = () => {
     const { dumpId, questionId }: { dumpId: string, questionId: number } = useParams() as any;
     const [korean, setKorean] = useState<boolean>(true);
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
-    const [type, setType] = useState<string>('sequence');
+    const [type, setType] = useState<string>(state?.initialType ?? 'sequence');
     const [pressed, setPressed] = useState<string[] | null>(null);
     const navigate = useNavigate();
     const keyboardControllerRef = useRef<HTMLInputElement>(null) as any;
    
-    const {data, isFetching } = useData({ dumpId, questionId, type });
-    useEffect(() => {
-        console.log("probvlem : " ,isFetching);
-    },[isFetching])
+    const {data, isFetching, refetchQuestion } = useData({ dumpId, questionId, type });
+    
+    // useEffect(() => {
+    //     console.log(type);
+    //     console.log("state:" ,state);
+
+    // })
+
 
     useEffect(() => {
         keyboardControllerRef.current.focus();
@@ -42,10 +47,8 @@ const Problem = () => {
     }, [data])
     
     
-    useEffect(() => {
-        if (state?.initialType) setType(state.initialType)
-    }, [state]);
     
+
     const changeLanguage = useCallback(() => {
         setKorean(!korean)
     }, [korean]);
@@ -54,12 +57,10 @@ const Problem = () => {
         setShowAnswer(!showAnswer);
     }, [showAnswer])
     
-
-    
     const changeType = useCallback((e: any) => {
-        setType(e.target.value);
-        console.log(type)
-    }, [type,setType]);
+        setType(prev => e.target.value);
+        refetchQuestion({dumpId, questionToken: questionId, type:e.target.value});
+    }, [setType, dumpId, questionId,refetchQuestion]);
     
     const onPressList = useCallback((key: any) => {
         const isPress = pressed?.filter(i => i === key)
@@ -71,9 +72,7 @@ const Problem = () => {
     const onKeyDown = useCallback((e: React.KeyboardEvent) => {
         if (!data) return;
 
-        if (e.keyCode == 37) movePrev();
-        else if (e.keyCode == 39) moveNext();
-        else if (e.keyCode == 38) setShowAnswer(!showAnswer);
+        if (e.keyCode == 38) setShowAnswer(!showAnswer);
         // else if (e.keyCode == 192 || e.keyCode == 77) toggleMark();
 
         let char;
@@ -83,18 +82,6 @@ const Problem = () => {
         
         onPressList(String.fromCharCode(char))
     }, [data, showAnswer, pressed, dumpId, questionId, type]);
-
-    const movePrev = useCallback(() => {
-        if (!data?.prev_id) return;
-
-        navigate(`/dumps/${dumpId}/${data?.prev_id}`)
-    }, [data]);
-
-    const moveNext = useCallback(() => {
-        if (!data?.next_id) return;
-
-        navigate(`/dumps/${dumpId}/${data?.next_id}`)
-    }, [data]);
 
     const moveToQuestionList = useCallback(() => {
         navigate(`/dumps/${dumpId}`)
@@ -142,15 +129,11 @@ const Problem = () => {
                 }
             </div>
             <div className="flex mt-8 justify-between">
-                {/* <Button className={`px-8 sm:px-16 py-4 ${isLoading == null ? "text-rose-700	" : null}`} onClick={movePrev} onKeyDown={onKeyDown} disabled={data?.prev_id == null}>이전</Button> */}
-                <Button className={`px-8 sm:px-16 py-4`} onClick={movePrev} onKeyDown={onKeyDown} disabled={data?.prev_id == null}>이전</Button>
-
+                <MoveButton dumpId={dumpId}  go={data?.prev_id} isFetching={isFetching} keyNumber={37} >이전</MoveButton>
                 <Button className="px-8 sm:px-16 py-4" onClick={toggleAnswer} onKeyDown={onKeyDown}>정답보기</Button>
-                <Button className="px-8 sm:px-16 py-4" onClick={ moveNext } onKeyDown={ onKeyDown } disabled={ data?.next_id == null}>다음</Button>
+                <MoveButton dumpId={dumpId} go={data?.next_id} isFetching={isFetching} keyNumber={39} >이전</MoveButton>
             </div>
-
             <Ad className="mt-2" />
-
             <div className="mt-8" role="status">
                 <div className="sr-only" aria-label="정답">
                     {showAnswer ? data?.answer : ''}

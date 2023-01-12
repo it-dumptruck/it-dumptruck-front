@@ -3,7 +3,6 @@ export type IDumpItem = {
     dumpName: string;
     image: string;
     lastUpdated: number;
-
 }
 
 export type IDump = {

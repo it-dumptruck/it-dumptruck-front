@@ -28,7 +28,7 @@ export async function getAuth(){
 }
 
 
-export async function getProblem(dumpId: string, questionToken: number, type: string):Promise<Problem> {
+export async function getProblem({ dumpId, questionToken, type }: { dumpId: string, questionToken: number, type: string }):Promise<Problem> {
     const { data } = await client.get(`/dumps/${dumpId}/${questionToken}`, {
         headers: {
             type
@@ -50,6 +50,15 @@ export async function getProblems(dumpId:string) {
 
 export async function getMarkedProblems(dumpId:string) {
     const { data } = await client.get(`/marks/${dumpId}`);
+    return data;
+}
+
+export async function getQuestionList({ dumpId, questionId, type, amount = 3 }: { dumpId: string, questionId: string, type: string, amount: number }) {
+    const { data } = await client.get(` /dumps/${dumpId}/${questionId}/${amount}`, {
+        headers: {
+            type:type
+        }
+    });
     return data;
 }
 

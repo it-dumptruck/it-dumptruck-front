@@ -27,8 +27,7 @@ export default function useToggleMark() {
                 {...context.prevProblemItemState}
             )
         },
-        onSuccess: async (data) => {
-            console.log("data ", data)
+        onSuccess: async () => {
         }
     });
 }

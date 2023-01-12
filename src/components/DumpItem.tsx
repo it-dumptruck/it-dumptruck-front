@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { IDump, IDumpItem } from '../api/types';
+import { TYPE } from '../pages/Problem/Problem';
 import Button from './Button';
 import LastUpdated from './lastUpdated';
 
@@ -12,7 +13,10 @@ const DumpItem = ({ image, dumpName, lastUpdated, dumpID }: IDumpItem) => {
     }, []);
 
     const moveRandom = useCallback(() => {
-        navigate(`/dumps/${dumpID}/1`)
+        navigate(`/dumps/${dumpID}/1`, {
+            state: {
+                initialType: TYPE.RANDOM
+        }})
     }, []);
 
     const moveMarked = useCallback(() => {
