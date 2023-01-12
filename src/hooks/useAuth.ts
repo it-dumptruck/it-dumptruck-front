@@ -1,12 +1,12 @@
-import { useMutation, useQuery } from 'react-query';
-import { useEffect } from 'react';
+import { useMutation } from 'react-query';
 import { useAuthState } from './../contexts/AuthContext';
 import { getAuth, setToken } from '../api';
 import authStorage from '../storages/authStorage';
 export const useAuth = () => {
-    const [ ,setAuth] = useAuthState();
+    const [auth ,setAuth] = useAuthState();
     return useMutation(getAuth, {
         onError: (e) => {
+            console.log("autherror")
             throw new Error("AUTH ERROR")
         },
         onSuccess: (data) => {

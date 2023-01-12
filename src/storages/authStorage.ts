@@ -10,7 +10,6 @@ const authStorage = {
         } catch (e) {
             return null;
         }
-        
     },
 
     set(data : any) {

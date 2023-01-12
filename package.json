@@ -2,7 +2,7 @@
   "name": "it-dumptruck-front",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://master.d290irqtmh4wx1.amplifyapp.com",
+  "proxy": "https://api.dumps.kr",
   "dependencies": {
     "@ctrl/react-adsense": "^1.6.0",
     "@emotion/react": "^11.10.0",

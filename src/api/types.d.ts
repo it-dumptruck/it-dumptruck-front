@@ -3,7 +3,6 @@ export type IDumpItem = {
     dumpName: string;
     image: string;
     lastUpdated: number;
-
 }
 
 export type IDump = {
@@ -27,11 +26,12 @@ export type Problem = {
     description: string;
     marked: boolean;
     user_answer?: string[];
+    questionId: number;
 }
 
 export type ShortProblem = {
     id: number;
-    questionID: string;
+    questionID: number;
     question: string;
     marked: boolean;
 }

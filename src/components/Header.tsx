@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useId, useState } from 'react';
 import { VscSaveAll } from 'react-icons/vsc';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from './Button';
 import authStorage from "../storages/authStorage";
 

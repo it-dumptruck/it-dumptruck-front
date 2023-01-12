@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const DefaultTemplate = ({ children }:any) => {
+const DefaultTemplate = ({ children }: any) => {
     return (
         <>
             <Header />
@@ -16,4 +16,4 @@ const DefaultTemplate = ({ children }:any) => {
     );
 };
 
-export default DefaultTemplate;
+export default React.memo(DefaultTemplate);

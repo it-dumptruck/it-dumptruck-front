@@ -7,37 +7,38 @@ import HomePage from './pages/Home';
 import ProblemPage from './pages/Problem';
 import ProblemsPage from './pages/Problems';
 import ErrorPage from './pages/Error';
+import DefaultTemplate from './templates/DefaultTemplate';
+import AuthComponent from './components/Auth';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
-
-// export interface RouteList {
-//   Home: undefined;
-//   Problems: undefined;
-  
-// }
-
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({});
 
 const App: React.FC = () => {
     return (
-        <AuthProvider>
-            <ProblemContextProvider>
+            <AuthProvider>
+                <ProblemContextProvider>
                 <QueryClientProvider client={queryClient}>
                     <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<HomePage />} />
-                            <Route path="/dumps">
-                                <Route path=":dumpId" element={<ProblemsPage />} />
-                                <Route path=":dumpId/marked" element={<ProblemsPage markedOnly />} />
-                                <Route path=":dumpId/:questionId" element={<ProblemPage />} />
-                            </Route>
-                            <Route path="/:uid" element={<HomePage/>} />
-                            <Route path="/errors/:statusCode" element={<ErrorPage/>} />
-                            <Route path="*" element={<Navigate to="/" />} />
-                        </Routes>
+                        <DefaultTemplate>
+                            <AuthComponent>
+                                <Routes>
+                                    <Route path="/" element={<HomePage />} />
+                                    <Route path="/dumps">
+                                        <Route path=":dumpId" element={<ProblemsPage />} />
+                                        <Route path=":dumpId/marked" element={<ProblemsPage markedOnly />} />
+                                        <Route path=":dumpId/:questionId" element={<ProblemPage />} />
+                                    </Route>
+                                    <Route path="/:uid" element={<HomePage/>} />
+                                    <Route path="/errors/:statusCode" element={<ErrorPage/>} />
+                                    <Route path="*" element={<Navigate to="/" />} />
+                                </Routes>
+                            </AuthComponent>
+                            </DefaultTemplate>
                     </BrowserRouter>
-                </QueryClientProvider>
-            </ProblemContextProvider>
-        </AuthProvider>
+                    {/* <ReactQueryDevtools initialIsOpen={false} position='bottom-right'/> */}
+                    </QueryClientProvider>
+                </ProblemContextProvider>
+            </AuthProvider>
     );
 };
 

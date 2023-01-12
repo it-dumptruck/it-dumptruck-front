@@ -8,9 +8,7 @@ type DumpListProps = {
 }
 
 const DumpList: React.FC<DumpListProps> = ({ dumps }) => {
-    useEffect(() => {
-        // console.log("test")
-    })
+    console.log("dumps")
     return (
         <div>
             <nav className="relative">
@@ -25,7 +23,7 @@ const DumpList: React.FC<DumpListProps> = ({ dumps }) => {
                 }
             </nav>
             {
-                dumps.map((item: IDump) => {
+                dumps?.map((item: IDump) => {
                     return (
                     <div className="mb-10 last:mb-0" aria-labelledby={"dumpgroup-" + item.groupName.toLowerCase()}>
                         <h3 className="text-2xl font-bold" id={"dumpgroup-" + item.groupName.toLowerCase()}>{item.groupName}</h3>

@@ -9,7 +9,7 @@ const AuthContext = createContext<AuthContextState | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [auth, setAuth] = useState<Auth | null>(null);
-    useLayoutEffect(() => {
+    useEffect(() => {
         (async () => {
             const getTokenRequest = async () => {
                 const token = await getAuth();
@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             authStorage.set(localAuthData);
         })();
         
-    }, [setAuth,setToken]);
+    }, [setAuth, setToken]);
     return <AuthContext.Provider value={[auth, setAuth]}>{children}</AuthContext.Provider>
 }
 
